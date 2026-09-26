@@ -2,13 +2,19 @@ import type { Project } from '@/data/projects';
 import { ArchitectureChain } from '@/components/ui/ArchitectureChain';
 import { ProjectVisual } from '@/components/ui/ProjectVisual';
 import { Tag } from '@/components/ui/Tag';
+import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 export function ProjectCaseStudy({ project, reversed }: { project: Project; reversed?: boolean }) {
   return (
     <article className="grid grid-cols-1 gap-10 border-t border-[var(--color-border)] py-16 first:border-none first:pt-0 lg:grid-cols-2 lg:gap-16">
       <div className={cn('flex flex-col justify-center', reversed && 'lg:order-2')}>
-        <ProjectVisual images={project.images} slug={project.slug} name={project.name} />
+        <ProjectVisual
+          images={project.images}
+          videos={project.videos}
+          slug={project.slug}
+          name={project.name}
+        />
       </div>
 
       <div className={cn(reversed && 'lg:order-1')}>
@@ -48,6 +54,14 @@ export function ProjectCaseStudy({ project, reversed }: { project: Project; reve
         <p className="mt-6 border-l-2 border-[var(--color-accent)] pl-4 text-sm leading-relaxed text-[var(--color-ink)]">
           {project.result}
         </p>
+
+        {project.codeUrl ? (
+          <div className="mt-6">
+            <Button href={project.codeUrl} target="_blank" rel="noopener noreferrer" variant="secondary">
+              View Code
+            </Button>
+          </div>
+        ) : null}
       </div>
     </article>
   );

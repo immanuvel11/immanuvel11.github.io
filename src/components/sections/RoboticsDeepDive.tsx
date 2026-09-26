@@ -24,7 +24,7 @@ export function RoboticsDeepDive() {
         </div>
 
         <div>
-          <ProjectVisual images={genesis.images} slug={genesis.slug} name={genesis.name} />
+          <ProjectVisual images={genesis.images.slice(0, 1)} slug={genesis.slug} name={genesis.name} />
           <p className="font-mono-tech mt-4 text-[11px] text-[var(--color-ink-faint)]">
             The hero visualization on this page is a procedural rig proportioned on GENESIS's real
             link lengths — not a rendered import of the physical robot. A rotatable CAD/GLB view will
