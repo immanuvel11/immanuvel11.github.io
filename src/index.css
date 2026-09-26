@@ -1,0 +1,86 @@
+@import 'tailwindcss';
+
+@theme {
+  /* --- surfaces --- */
+  --color-bg: #0b0c0e;
+  --color-surface: #141618;
+  --color-surface-raised: #1b1e21;
+  --color-border: #2a2d30;
+  --color-border-strong: #3a3e42;
+
+  /* --- type --- */
+  --color-ink: #edece7;
+  --color-ink-muted: #9a9d9f;
+  --color-ink-faint: #5a5d60;
+
+  /* --- accent: restrained industrial amber, used sparingly --- */
+  --color-accent: #d98a3d;
+  --color-accent-strong: #f0a559;
+  --color-accent-dim: #6b4a26;
+
+  /* --- status --- */
+  --color-status-ok: #5fa777;
+  --color-status-warn: #d98a3d;
+  --color-status-error: #b5533e;
+
+  --font-sans: 'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+
+  --container-content: 1240px;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    background: var(--color-bg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-accent-dim);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .font-mono-tech {
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
