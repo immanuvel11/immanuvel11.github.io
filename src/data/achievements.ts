@@ -20,6 +20,10 @@ export const achievements: Achievement[] = [
     title: 'Participant',
     event: 'TIFAN 2026',
   },
+  {
+    title: 'Participant',
+    event: 'Smart India Hackathon (SIH)',
+  },
 ];
 
 // Milestones for the vertical timeline. Only calendar-anchored where the CV
@@ -46,7 +50,7 @@ export const milestones: Milestone[] = [
   },
   {
     title: 'KIRA — Health Monitoring & Assistance Robot',
-    detail: 'Team of 4. Led software development and system integration.',
+    detail: 'Team of 6, Team Lead. Built for Smart India Hackathon (SIH).',
   },
   {
     date: '2026',
