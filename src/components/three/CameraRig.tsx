@@ -4,21 +4,24 @@ import type { Group } from 'three';
 import type { ReactNode } from 'react';
 
 /**
- * Restrained interaction: the rig turns gently toward the pointer and eases
- * into a slightly closer, front-on view as the visitor scrolls through the
- * hero — never a free spin, never scroll-jacked.
+ * A slow, continuous turntable drift makes it unmistakable that this is a
+ * live 3D render (not a static image) even before the visitor moves the
+ * mouse; pointer parallax and the scroll dolly layer on top of that same
+ * base rotation — still no free spin, still no scroll-jacking.
  */
 export function CameraRig({ children }: { children: ReactNode }) {
   const groupRef = useRef<Group>(null);
   const pointer = useRef({ x: 0, y: 0 });
   const { size } = useThree();
 
-  useFrame(({ mouse, camera }) => {
+  useFrame(({ clock, mouse, camera }) => {
     pointer.current.x += (mouse.x - pointer.current.x) * 0.04;
     pointer.current.y += (mouse.y - pointer.current.y) * 0.04;
 
+    const idleDrift = Math.sin(clock.getElapsedTime() * 0.15) * 0.18;
+
     if (groupRef.current) {
-      groupRef.current.rotation.y = pointer.current.x * 0.25 + Math.PI * 0.15;
+      groupRef.current.rotation.y = idleDrift + pointer.current.x * 0.3 + Math.PI * 0.12;
       groupRef.current.rotation.x = -pointer.current.y * 0.06;
     }
 

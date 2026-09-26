@@ -23,8 +23,8 @@ export function Hero() {
         )}
       </div>
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-[var(--color-bg)]/40" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--color-bg)] via-[var(--color-bg)]/55 to-transparent sm:via-[var(--color-bg)]/35" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-[var(--color-bg)]/30" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--color-bg)] via-[var(--color-bg)]/30 to-transparent sm:via-[var(--color-bg)]/15" />
 
       <div className="relative mx-auto flex w-full max-w-[var(--container-content)] flex-1 flex-col justify-end px-6 pb-16 pt-32 sm:px-10 sm:pb-24">
         <span className="font-mono-tech text-xs uppercase tracking-[0.2em] text-[var(--color-accent)]">
