@@ -1,13 +1,15 @@
 import { Grid } from '@react-three/drei';
-import { CameraRig } from './CameraRig';
+import { StoryCameraRig } from './StoryCameraRig';
 import { QuadrupedRig } from './QuadrupedRig';
+import { TifanRig } from './TifanRig';
+import { KiraRig } from './KiraRig';
 import { rigColors } from './materials';
 
-export function HeroScene() {
+export function StoryScene() {
   return (
     <>
       <color attach="background" args={['#0b0c0e']} />
-      <fog attach="fog" args={['#0b0c0e', 5, 11]} />
+      <fog attach="fog" args={['#0b0c0e', 5, 13]} />
 
       <ambientLight intensity={0.95} />
       <directionalLight position={[3, 5, 2]} intensity={3} castShadow />
@@ -15,22 +17,22 @@ export function HeroScene() {
       <pointLight position={[0, 1.6, 2.5]} intensity={0.8} color="#d98a3d" />
 
       <Grid
-        position={[0, 0, 0]}
-        args={[20, 20]}
+        args={[40, 40]}
         cellSize={0.5}
         cellThickness={0.5}
         cellColor={rigColors.limb}
         sectionSize={2.5}
         sectionThickness={1}
         sectionColor={rigColors.ground}
-        fadeDistance={9}
+        fadeDistance={10}
         fadeStrength={1.5}
         infiniteGrid
       />
 
-      <CameraRig>
-        <QuadrupedRig />
-      </CameraRig>
+      <QuadrupedRig />
+      <TifanRig />
+      <KiraRig />
+      <StoryCameraRig />
     </>
   );
 }

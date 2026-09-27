@@ -4,7 +4,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 
 export function About() {
   return (
-    <SectionShell id="about">
+    <SectionShell id="about" chapter="about" scrim>
       <SectionHeading index="01" title="About" />
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.4fr_1fr]">
         <p className="max-w-2xl text-xl leading-relaxed text-[var(--color-ink)] text-balance sm:text-2xl">

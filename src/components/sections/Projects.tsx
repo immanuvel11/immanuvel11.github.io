@@ -5,7 +5,7 @@ import { ProjectCaseStudy } from './ProjectCaseStudy';
 
 export function Projects() {
   return (
-    <SectionShell id="projects">
+    <SectionShell id="projects" scrim>
       <SectionHeading
         index="02"
         title="Projects"

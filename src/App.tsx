@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { StoryScroll } from '@/components/layout/StoryScroll';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
 import { Projects } from '@/components/sections/Projects';
@@ -15,10 +16,12 @@ function App() {
     <>
       <Navbar />
       <main>
-        <Hero />
-        <About />
-        <Projects />
-        <RoboticsDeepDive />
+        <StoryScroll>
+          <Hero />
+          <About />
+          <Projects />
+          <RoboticsDeepDive />
+        </StoryScroll>
         <EngineeringStack />
         <Timeline />
         <Achievements />

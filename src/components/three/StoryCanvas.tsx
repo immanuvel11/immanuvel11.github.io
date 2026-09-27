@@ -1,12 +1,12 @@
 import { Canvas } from '@react-three/fiber';
-import { HeroScene } from './HeroScene';
+import { StoryScene } from './StoryScene';
 
-interface HeroCanvasProps {
-  /** When false, the render loop is fully paused (hero scrolled off screen). */
+interface StoryCanvasProps {
+  /** When false, the render loop is fully paused (story range scrolled off screen). */
   active?: boolean;
 }
 
-export function HeroCanvas({ active = true }: HeroCanvasProps) {
+export function StoryCanvas({ active = true }: StoryCanvasProps) {
   return (
     <Canvas
       shadows
@@ -15,9 +15,9 @@ export function HeroCanvas({ active = true }: HeroCanvasProps) {
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       frameloop={active ? 'always' : 'never'}
     >
-      <HeroScene />
+      <StoryScene />
     </Canvas>
   );
 }
 
-export default HeroCanvas;
+export default StoryCanvas;
