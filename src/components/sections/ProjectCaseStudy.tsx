@@ -5,9 +5,18 @@ import { Tag } from '@/components/ui/Tag';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
+const STORY_CHAPTER: Record<string, string> = {
+  genesis: 'genesis',
+  'tifan-2026': 'tifan',
+  kira: 'kira',
+};
+
 export function ProjectCaseStudy({ project, reversed }: { project: Project; reversed?: boolean }) {
   return (
-    <article className="grid grid-cols-1 gap-10 border-t border-[var(--color-border)] py-16 first:border-none first:pt-0 lg:grid-cols-2 lg:gap-16">
+    <article
+      data-story-chapter={STORY_CHAPTER[project.slug]}
+      className="grid grid-cols-1 gap-10 border-t border-[var(--color-border)] py-16 first:border-none first:pt-0 lg:grid-cols-2 lg:gap-16"
+    >
       <div className={cn('flex flex-col justify-center', reversed && 'lg:order-2')}>
         <ProjectVisual
           images={project.images}

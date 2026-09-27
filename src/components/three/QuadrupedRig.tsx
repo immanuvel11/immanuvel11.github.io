@@ -3,6 +3,8 @@ import { useFrame } from '@react-three/fiber';
 import type { Group } from 'three';
 import { Leg } from './Leg';
 import { rigColors } from './materials';
+import { useStoryProgressRef } from './storyContext';
+import { computeGenesisState } from './genesisStory';
 
 const BODY_LENGTH = 1.15;
 const BODY_WIDTH = 0.55;
@@ -17,10 +19,14 @@ const legPositions: Array<{ position: [number, number, number]; mirrored: boolea
 
 export function QuadrupedRig() {
   const bodyRef = useRef<Group>(null);
+  const progress = useStoryProgressRef();
 
   useFrame(({ clock }) => {
+    const { chapter, t } = progress.current;
+    const { explode } = computeGenesisState(chapter, t);
+    const bob = Math.sin(clock.getElapsedTime() * 0.6) * 0.015;
     if (bodyRef.current) {
-      bodyRef.current.position.y = 0.72 + Math.sin(clock.getElapsedTime() * 0.6) * 0.015;
+      bodyRef.current.position.y = 0.72 + bob + explode * 0.3;
     }
   });
 

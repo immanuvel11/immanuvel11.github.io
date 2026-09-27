@@ -8,7 +8,7 @@ const genesis = projects.find((p) => p.slug === 'genesis')!;
 
 export function RoboticsDeepDive() {
   return (
-    <SectionShell id="robotics" className="bg-[var(--color-surface)]/40">
+    <SectionShell id="robotics" chapter="robotics" scrim>
       <SectionHeading
         index="03"
         title="Robotics — GENESIS"

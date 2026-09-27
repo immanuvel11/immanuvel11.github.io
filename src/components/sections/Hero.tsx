@@ -1,27 +1,25 @@
-import { Suspense, lazy } from 'react';
 import { profile } from '@/data/profile';
 import { useCanRender3D } from '@/hooks/useCanRender3D';
-import { useInView } from '@/hooks/useInView';
 import { Button } from '@/components/ui/Button';
 import { HeroFallback } from '@/components/three/HeroFallback';
 
-const HeroCanvas = lazy(() => import('@/components/three/HeroCanvas'));
-
 export function Hero() {
   const canRender3D = useCanRender3D();
-  const { ref, inView } = useInView<HTMLElement>();
 
   return (
-    <section id="top" ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden">
-      <div className="absolute inset-0">
-        {canRender3D ? (
-          <Suspense fallback={<HeroFallback />}>
-            <HeroCanvas active={inView} />
-          </Suspense>
-        ) : (
+    <section
+      id="top"
+      data-story-chapter="hero"
+      className="relative flex min-h-[100svh] flex-col overflow-hidden"
+    >
+      {/* The persistent 3D story layer (StoryScroll) renders behind this whole
+          section and beyond; this is only the static fallback for when it's
+          unavailable (no WebGL / reduced motion). */}
+      {!canRender3D ? (
+        <div className="absolute inset-0">
           <HeroFallback />
-        )}
-      </div>
+        </div>
+      ) : null}
 
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-[var(--color-bg)]/30" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--color-bg)] via-[var(--color-bg)]/30 to-transparent sm:via-[var(--color-bg)]/15" />
