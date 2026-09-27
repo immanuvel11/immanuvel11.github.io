@@ -19,12 +19,12 @@ export function SectionShell({ id, children, className, bordered = true, chapter
       id={id}
       data-story-chapter={chapter}
       className={cn(
-        'scroll-mt-20 py-24 sm:py-32',
+        // `relative z-10`: a position:fixed element paints above static
+        // in-flow content regardless of DOM order or background color, so
+        // every section needs its own stacking context to sit above the
+        // story's persistent canvas (z-0) — not just an opaque background.
+        'relative z-10 scroll-mt-20 py-24 sm:py-32',
         bordered && 'border-t border-[var(--color-border)]',
-        // Sections outside the 3D story range need a fully opaque background:
-        // the story's fixed canvas stays mounted for a moment after its own
-        // content scrolls past (while any sliver of its wrapper is still on
-        // screen), and would otherwise bleed through a transparent section.
         scrim ? 'bg-[var(--color-bg)]/80 backdrop-blur-[2px]' : 'bg-[var(--color-bg)]',
         className,
       )}
