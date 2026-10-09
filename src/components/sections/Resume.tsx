@@ -1,27 +1,46 @@
-import { profile } from '@/data/profile';
-import { SectionShell } from '@/components/layout/SectionShell';
-import { SectionHeading } from '@/components/ui/SectionHeading';
-import { Button } from '@/components/ui/Button';
+import { education, experience, extracurricular, leadership, type ResumeColumn } from '@/data/resume';
+import { SectionTitle } from '@/components/ui/SectionTitle';
+
+function ResumeGroup({ column }: { column: ResumeColumn }) {
+  return (
+    <>
+      <h3 className="resume-title">{column.heading}</h3>
+      {column.entries.map((entry) => (
+        <div className="resume-item" key={`${entry.title}-${entry.period}`}>
+          <h4>{entry.title}</h4>
+          <h5>{entry.period}</h5>
+          {entry.place ? <p className="font-italic">{entry.place}</p> : null}
+          {entry.description ? <p>{entry.description}</p> : null}
+          {entry.bullets ? (
+            <ul>
+              {entry.bullets.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      ))}
+    </>
+  );
+}
 
 export function Resume() {
   return (
-    <SectionShell id="resume">
-      <SectionHeading index="07" title="Resume" />
+    <section id="resume" className="resume">
+      <div className="container" data-aos="fade-up">
+        <SectionTitle title="Resume" />
 
-      <div className="flex flex-col items-start justify-between gap-8 border border-[var(--color-border)] p-8 sm:flex-row sm:items-center sm:p-10">
-        <div>
-          <p className="text-lg text-[var(--color-ink)]">Full CV — education, experience, and skills.</p>
-          <p className="mt-1 text-sm text-[var(--color-ink-muted)]">PDF, single page.</p>
-        </div>
-        <div className="flex shrink-0 flex-wrap gap-3">
-          <Button href={profile.resumePdf} target="_blank" rel="noopener noreferrer" variant="secondary">
-            View CV
-          </Button>
-          <Button href={profile.resumePdf} download variant="primary">
-            Download CV
-          </Button>
+        <div className="row">
+          <div className="col-lg-6">
+            <ResumeGroup column={experience} />
+            <ResumeGroup column={leadership} />
+          </div>
+          <div className="col-lg-6">
+            <ResumeGroup column={education} />
+            <ResumeGroup column={extracurricular} />
+          </div>
         </div>
       </div>
-    </SectionShell>
+    </section>
   );
 }

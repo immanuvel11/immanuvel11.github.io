@@ -1,12 +1,21 @@
-// Sourced from Immanuvel M's CV (IMMANUVEL_CV.pdf). Do not add facts not present there.
+// Sources: Immanuvel M's CV, plus the personal details he set up on his
+// original portfolio (hero text, social links, About, resume entries).
+// Nothing here is carried over from the template author's content.
 
 export const profile = {
   name: 'Immanuvel M',
-  role: 'Aspiring Robotics Engineer',
-  kicker: 'Mechatronics Engineering Student',
-  headline: 'Building robots, embedded control systems, and automation platforms.',
+  displayName: 'Immanuvel.M',
+  headline: 'Mechatronics & Robotics Engineering Student',
+  typedItems: [
+    'Aspiring Robotics Engineer',
+    'Mechatronics Engineering Student',
+    'Embedded Systems Developer',
+    'Automation & Hardware Builder',
+  ],
   summary:
-    "I'm a Mechatronics Engineering student combining mechanical design, embedded electronics, and control software to build machines that actually move — a quadruped robot, a service robot, and an agricultural automation platform, among them. I work across CAD, firmware, and hardware integration, and I'm currently extending that into robotics simulation and applied AI.",
+    "I'm a Mechatronics Engineering student combining mechanical design, embedded electronics and control software to build machines that actually move — a quadruped robot, a service robot and an agricultural automation platform, among them. I work across CAD, firmware and hardware integration, and I'm extending that into robotics simulation and applied AI.",
+  degree: 'B.E. Mechatronics Engineering',
+  school: 'KCG College of Technology, Chennai (Anna University)',
   location: 'Chennai, Tamil Nadu, India',
   email: 'm.immanuvel.11@gmail.com',
   phone: '+91 99520 02158',
@@ -14,26 +23,8 @@ export const profile = {
   githubHandle: 'github.com/immanuvel11',
   linkedin: 'https://www.linkedin.com/in/immanuvel-murugesan-8ba101301',
   linkedinHandle: 'linkedin.com/in/immanuvel-murugesan',
+  whatsapp: 'https://wa.me/qr/LBOUSWSZVMXVO1',
+  instagram: 'https://www.instagram.com/immanuvel_11',
   resumePdf: '/resume/Immanuvel-M-Resume.pdf',
+  portrait: '/img/immanuvel.jpg',
 } as const;
-
-export const education = {
-  degree: 'B.E. Mechatronics Engineering',
-  institution: 'KCG College of Technology, Chennai',
-  affiliation: 'Affiliated to Anna University',
-  duration: '2024 – 2028',
-} as const;
-
-export const experience = [
-  {
-    role: 'CAD & Additive Manufacturing Engineer',
-    org: "EL's Crafting",
-    type: 'Part-Time',
-    duration: '1 Year',
-    bullets: [
-      'Developed parametric CAD models using CadQuery, Blender, and Fusion 360.',
-      'Managed the complete 3D printing workflow — slicing, fabrication, and printer maintenance.',
-      'Applied rapid prototyping, hardware calibration, and material optimization to functional products.',
-    ],
-  },
-] as const;

@@ -1,24 +1,45 @@
-// Case-study data sourced from Immanuvel M's CV. Architecture chains describe
-// the systems using only what the CV states — no invented components or metrics.
+// Project case studies. Built projects (GENESIS, KIRA, TIFAN 2026) are sourced
+// from the CV, the user's project folders, and the firmware itself. The two
+// in-progress entries contain only what the user has stated about them — no
+// results, metrics, dates or field data are claimed.
 
-export type ArchitectureStep = string;
+export type ProjectCategory = 'robotics' | 'hardware' | 'software' | 'ai-ml' | 'automation';
+
+export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
+  robotics: 'Robotics',
+  hardware: 'Hardware',
+  software: 'Software',
+  'ai-ml': 'AI & ML',
+  automation: 'Automation',
+};
+
+export interface ProjectVideo {
+  file: string;
+  poster: string;
+}
 
 export interface Project {
   slug: string;
   name: string;
   subtitle: string;
-  role: string;
+  /** One line shown under the card. */
+  summary: string;
+  categories: ProjectCategory[];
   status: string;
-  problem: string;
-  approach: string[];
-  architecture: ArchitectureStep[];
+  inProgress: boolean;
+  role?: string;
+  problem?: string;
+  approach?: string[];
+  architecture?: string[];
   technologies: string[];
-  result: string;
-  /** Drop real photos/renders into public/projects/<slug>/ and list filenames here. */
+  result?: string;
+  /** Files inside public/projects/<slug>/. The first image is the default cover. */
   images: string[];
-  /** Real demo clips in public/projects/<slug>/, each with a poster frame. */
-  videos?: { file: string; poster: string }[];
-  /** Link to a public source-code repository, if one exists. */
+  videos?: ProjectVideo[];
+  /** Overrides the default cover image / crop. */
+  cover?: { file: string; position?: string };
+  /** boxicons class shown on the card when there is no photo yet. */
+  placeholderIcon?: string;
   codeUrl?: string;
 }
 
@@ -27,23 +48,26 @@ export const projects: Project[] = [
     slug: 'genesis',
     name: 'GENESIS',
     subtitle: '12-DOF Quadruped Robot Dog',
-    role: 'Individual project',
+    summary: 'Arduino Mega + PCA9685 quadruped with inverse kinematics and a Bluetooth Android app.',
+    categories: ['robotics', 'hardware', 'software'],
     status: 'Functional prototype',
+    inProgress: false,
+    role: 'Individual project',
     problem:
       'Legged locomotion needs twelve coordinated degrees of freedom to hold a stable stance and walk, turn, and reverse without falling — a mechanical design and control problem in one.',
     approach: [
-      "Built the mechanical frame on the open-source SpotMicro quadruped platform (3D-printed, MG995 / MG996R servos), rather than designing the leg geometry from scratch.",
+      'Built the mechanical frame on the open-source SpotMicro quadruped platform (3D-printed, MG995 / MG996R servos), rather than designing the leg geometry from scratch.',
       'Drove all 12 joints from an Arduino Mega through a PCA9685 16-channel PWM driver.',
       'Implemented inverse kinematics in firmware (two-link law-of-cosines solver) using the leg’s real link lengths — 115 mm femur, 137 mm tibia — to convert foot positions into joint angles.',
       'Wrote gait routines for walking, reversing, dancing, push-ups, and a hello wave, plus an ultrasonic sensor that triggers an autonomous handshake when a hand is detected.',
       'Built a companion Android app (MIT App Inventor) that talks to the Mega over Bluetooth to trigger each behaviour.',
     ],
     architecture: [
-      'SpotMicro mechanical frame (12-DOF)',
-      'MG995 / MG996R servos — PCA9685 driver',
+      'SpotMicro frame (12-DOF)',
+      'MG995 / MG996R servos + PCA9685',
       'Arduino Mega + inverse kinematics',
-      'Gait routines / ultrasonic-triggered handshake',
-      'Bluetooth control — custom Android app',
+      'Gait routines / ultrasonic handshake',
+      'Bluetooth — custom Android app',
     ],
     technologies: [
       'Arduino Mega',
@@ -51,7 +75,8 @@ export const projects: Project[] = [
       'Inverse Kinematics',
       'MG995 / MG996R Servos',
       'Ultrasonic Sensing',
-      'Bluetooth (Android App Control)',
+      'Bluetooth',
+      'Android App',
       'C++',
     ],
     result:
@@ -74,8 +99,11 @@ export const projects: Project[] = [
     slug: 'kira',
     name: 'KIRA',
     subtitle: 'Health Monitoring & Assistance Robot',
-    role: 'Team of 6 — Team Lead',
+    summary: 'Wheeled assistance robot with temperature sensing, a touchscreen and two mobile apps. Smart India Hackathon.',
+    categories: ['robotics', 'hardware', 'software'],
     status: 'Functional prototype — built for Smart India Hackathon (SIH)',
+    inProgress: false,
+    role: 'Team of 6 — Team Lead',
     problem:
       'A mobile assistance robot needs a wheeled base sturdy enough for real-world use, an approachable interface, and reliable sensing to monitor and guide people — all working together, not just as separate demos.',
     approach: [
@@ -86,17 +114,17 @@ export const projects: Project[] = [
       'Built dual mobile applications for interacting with and monitoring the robot.',
     ],
     architecture: [
-      'Wheeled mobile base — motors + embedded control',
+      'Wheeled mobile base',
       'Temperature & interaction sensors',
-      'Onboard touchscreen interface',
+      'Onboard touchscreen',
       'Monitoring & interaction software',
-      'Dual mobile applications',
+      'Dual mobile apps',
     ],
     technologies: [
       'Embedded C/C++',
       'Sensor Integration',
       'Touchscreen Interface',
-      'Mobile Application Development',
+      'Mobile Apps',
       'System Integration',
     ],
     result:
@@ -112,13 +140,17 @@ export const projects: Project[] = [
       { file: 'kira-demo-1.mp4', poster: 'kira-demo-1-poster.jpg' },
       { file: 'kira-demo-2.mp4', poster: 'kira-demo-2-poster.jpg' },
     ],
+    cover: { file: 'kira-01-portrait.jpg', position: 'center 18%' },
   },
   {
     slug: 'tifan-2026',
     name: 'TIFAN 2026',
     subtitle: 'Automated Seedling Transplanter',
-    role: 'Team Electronics Lead',
+    summary: 'Tractor-towed implement with a stepper gantry, comb gripper and conveyor, field-tested.',
+    categories: ['robotics', 'hardware', 'automation'],
     status: 'Field-tested — Participant, TIFAN 2026',
+    inProgress: false,
+    role: 'Team Electronics Lead',
     problem:
       'Transplanting nursery seedlings by hand is slow and repetitive. Automating it needs a mechanism that can extract fragile plugs from a tray without damaging them, index the tray, and place each seedling accurately — all from a tractor-towed implement that survives real field conditions.',
     approach: [
@@ -130,20 +162,20 @@ export const projects: Project[] = [
       'Led electronics integration and troubleshooting through bench testing and an actual field trial towed behind a tractor.',
     ],
     architecture: [
-      'Mobile app (Bluetooth command)',
+      'Mobile app (Bluetooth)',
       'Arduino Mega controller',
-      'Stepper drivers — gantry & conveyor motors',
+      'Stepper drivers — gantry & conveyor',
       'Gantry + multi-finger gripper',
-      'Seedling pick-and-place onto conveyor',
+      'Seedling pick-and-place',
     ],
     technologies: [
       'Arduino Mega',
       'NEMA 17 Stepper Motors',
       'Stepper Motor Drivers',
-      'Bluetooth Communication',
+      'Bluetooth',
       'Chain & Conveyor Drive',
-      'Custom Gripper Mechanism',
-      'Mobile Application',
+      'Custom Gripper',
+      'Mobile App',
     ],
     result:
       'Built and field-tested a tractor-towed seedling transplanter — gantry, gripper, and conveyor working together to extract and place seedlings — as Team Electronics Lead for TIFAN 2026.',
@@ -160,5 +192,59 @@ export const projects: Project[] = [
       { file: 'tifan-demo-1.mp4', poster: 'tifan-demo-1-poster.jpg' },
       { file: 'tifan-demo-2.mp4', poster: 'tifan-demo-2-poster.jpg' },
     ],
+  },
+  {
+    slug: 'digital-twin',
+    name: 'Well-to-Surface Digital Twin',
+    subtitle: 'Hybrid physics + AI model for CSS and Sucker Rod Pump (SRP) operations',
+    summary: 'In progress: physics + AI digital-twin architecture for heavy-oil wells, prototyped on synthetic data.',
+    categories: ['ai-ml', 'software'],
+    status: 'In progress — prototype on synthetic data',
+    inProgress: true,
+    problem:
+      'In heavy-oil wells using Cyclic Steam Stimulation (CSS) with sucker rod pumps, reservoir temperature, crude viscosity, oil mobility, production, pump performance, energy use and failures all interact — so tuning one in isolation misses the system-level picture.',
+    approach: [
+      'Modelling the chain Reservoir → Wellbore → SRP → Surface production as a hybrid of physics-based models and machine learning.',
+      'The prototype architecture contains five models: thermal / reservoir behaviour, production prediction, SRP performance, failure / anomaly detection, and joint CSS + SRP optimization.',
+      'Uses synthetic data to reproduce the architecture and demonstrate the workflow where real field data is unavailable.',
+      'A 3D pumpjack visualization is being developed alongside, to connect the model to an interactive view of the equipment.',
+    ],
+    architecture: [
+      'Reservoir',
+      'Thermal model',
+      'Viscosity',
+      'Wellbore',
+      'Sucker rod pump (SRP)',
+      'Surface production',
+      'Optimization',
+    ],
+    technologies: [
+      'Python',
+      'XGBoost',
+      'PyTorch',
+      'Physics-based models',
+      'Synthetic data',
+      'Dashboard concepts',
+    ],
+    result:
+      'Work in progress. All values in the prototype are simulated / demonstration data — nothing here represents real field measurements.',
+    images: [],
+    placeholderIcon: 'bx-network-chart',
+  },
+  {
+    slug: 'ar-visualization',
+    name: 'AR Visualization',
+    subtitle: 'Augmented-reality medical / technical visualization',
+    summary: 'Early-stage: Unity + Vuforia AR with computer-vision, segmentation and CNN-based models.',
+    categories: ['ai-ml', 'software'],
+    status: 'Early-stage / exploratory',
+    inProgress: true,
+    approach: [
+      'Built on Unity and Vuforia for augmented-reality visualization of medical / technical content.',
+      'Explores computer-vision and segmentation concepts and CNN-based models.',
+    ],
+    technologies: ['Unity', 'Vuforia', 'Computer Vision', 'Segmentation', 'CNN'],
+    images: [],
+    placeholderIcon: 'bx-cube-alt',
   },
 ];

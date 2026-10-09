@@ -1,41 +1,57 @@
 import { profile } from '@/data/profile';
-import { SectionShell } from '@/components/layout/SectionShell';
-import { SectionHeading } from '@/components/ui/SectionHeading';
-
-const links = [
-  { label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
-  { label: 'Phone', value: profile.phone, href: `tel:${profile.phone.replace(/\s+/g, '')}` },
-  { label: 'GitHub', value: profile.githubHandle, href: profile.github },
-  { label: 'LinkedIn', value: profile.linkedinHandle, href: profile.linkedin },
-];
+import { SectionTitle } from '@/components/ui/SectionTitle';
 
 export function Contact() {
   return (
-    <SectionShell id="contact">
-      <SectionHeading index="08" title="Contact" />
+    <section id="contact" className="contact">
+      <div className="container" data-aos="fade-up">
+        <SectionTitle title="Contact" subtitle="Open to internships, projects and conversations about robotics." />
 
-      <div className="grid grid-cols-1 gap-x-12 gap-y-8 sm:grid-cols-2">
-        {links.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            target={link.href.startsWith('http') ? '_blank' : undefined}
-            rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="group flex items-baseline justify-between border-b border-[var(--color-border)] pb-4"
-          >
-            <span className="font-mono-tech text-xs uppercase text-[var(--color-ink-faint)]">
-              {link.label}
-            </span>
-            <span className="text-base text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-accent-strong)]">
-              {link.value}
-            </span>
-          </a>
-        ))}
-        <div className="flex items-baseline justify-between border-b border-[var(--color-border)] pb-4 sm:col-span-2">
-          <span className="font-mono-tech text-xs uppercase text-[var(--color-ink-faint)]">Location</span>
-          <span className="text-base text-[var(--color-ink)]">{profile.location}</span>
+        <div className="row content justify-content-center">
+          <div className="col-lg-5">
+            <ul>
+              <li>
+                <i className="bx bx-envelope" aria-hidden="true" />
+                <strong>Email:</strong> <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              </li>
+              <li>
+                <i className="bx bx-phone" aria-hidden="true" />
+                <strong>Phone:</strong>{' '}
+                <a href={`tel:${profile.phone.replace(/\s+/g, '')}`}>{profile.phone}</a>
+              </li>
+              <li>
+                <i className="bx bx-map" aria-hidden="true" />
+                <strong>Location:</strong> {profile.location}
+              </li>
+            </ul>
+          </div>
+          <div className="col-lg-5">
+            <ul>
+              <li>
+                <i className="bx bxl-github" aria-hidden="true" />
+                <strong>GitHub:</strong>{' '}
+                <a href={profile.github} target="_blank" rel="noopener noreferrer">
+                  {profile.githubHandle}
+                </a>
+              </li>
+              <li>
+                <i className="bx bxl-linkedin" aria-hidden="true" />
+                <strong>LinkedIn:</strong>{' '}
+                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+                  {profile.linkedinHandle}
+                </a>
+              </li>
+              <li>
+                <i className="bx bxl-instagram" aria-hidden="true" />
+                <strong>Instagram:</strong>{' '}
+                <a href={profile.instagram} target="_blank" rel="noopener noreferrer">
+                  @immanuvel_11
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </SectionShell>
+    </section>
   );
 }
