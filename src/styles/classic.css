@@ -440,48 +440,247 @@ section {
 /*--------------------------------------------------------------
 # Skills
 --------------------------------------------------------------*/
-.skill {
-  padding: 10px 0;
-  margin: 0 0 6px 0;
-  text-transform: capitalize;
-  display: block;
-  font-weight: 500;
-  font-family: "Poppins", sans-serif;
+/* Six category cards on a 6-column grid: the featured Robotics card spans
+   the full width, the rest pair up and settle into thirds on wide screens. */
+.skills .skills-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.skills .skill-card {
+  min-width: 0;
+  padding: 20px 22px 22px;
+  background: #f8fbff;
+  border: 1px solid #e6eef8;
+  border-radius: 10px;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.skills .skill-card:hover {
+  border-color: #c7dcf3;
+}
+
+.skills .skill-card.is-featured {
+  background: #eff6fd;
+  border-color: #cfe1f5;
+  border-top: 3px solid #0563bb;
+  padding: 24px 26px 26px;
+}
+
+.skills .skill-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.skills .skill-card-icon {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e3effb;
+  color: #0563bb;
+  font-size: 20px;
+}
+
+.skills .is-featured .skill-card-icon {
+  width: 46px;
+  height: 46px;
+  font-size: 25px;
+  background: #0563bb;
+  color: #fff;
+}
+
+.skills .skill-card-heading {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.skills .skill-card-heading h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
   color: #45505b;
 }
 
-.skills .skills-note {
-  color: #728394;
-  font-size: 14px;
-  margin: -6px 0 14px 0;
+.skills .is-featured .skill-card-heading h3 {
+  font-size: 21px;
 }
 
-.skills .skill-icon {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto;
+.skills .skill-card-heading p {
+  margin: 3px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #728394;
+}
+
+.skills .skill-card-index {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #9db9d8;
+}
+
+.skills .skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skills .skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 7px 12px 7px 9px;
+  background: #fff;
+  border: 1px solid #dfe9f5;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #45505b;
+  cursor: default;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.skills .skill-chip:hover {
+  border-color: #0563bb;
+  color: #0563bb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(5, 99, 187, 0.12);
+}
+
+.skills .skill-chip.is-early {
+  border-style: dashed;
+  border-color: #b9cfe8;
+}
+
+.skills .skill-chip.is-early:hover {
+  border-style: dashed;
+  border-color: #0563bb;
+}
+
+.skills .skill-chip-icon {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.skills .skill-icon svg,
-.skills .skill-icon img {
-  width: 44px;
-  height: 44px;
+.skills .skill-chip-icon svg,
+.skills .skill-chip-icon img {
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
-.skills .skill-icon .bx {
-  width: 56px;
-  height: 56px;
-  font-size: 30px;
+.skills .skill-chip-icon .bx {
+  font-size: 20px;
   color: #0563bb;
-  background: #eaf2fb;
-  border-radius: 50%;
+}
+
+.skills .skill-chip-label {
+  min-width: 0;
+}
+
+.skills .is-featured .skill-chips {
+  gap: 10px;
+}
+
+.skills .is-featured .skill-chip {
+  padding: 10px 16px 10px 12px;
+  gap: 10px;
+  font-size: 15px;
+  border-color: #cfe1f5;
+}
+
+.skills .is-featured .skill-chip-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.skills .is-featured .skill-chip-icon svg,
+.skills .is-featured .skill-chip-icon img {
+  width: 26px;
+  height: 26px;
+}
+
+.skills .is-featured .skill-chip-icon .bx {
+  font-size: 26px;
+}
+
+.skills .skills-legend {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: #728394;
+}
+
+.skills .skills-legend-swatch {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 12px;
+  border: 1px dashed #8fb0d6;
+  border-radius: 4px;
+  background: #fff;
+}
+
+@media (min-width: 768px) {
+  .skills .skills-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .skills .skill-card {
+    grid-column: span 3;
+  }
+
+  .skills .skill-card.is-featured,
+  .skills .skill-card--automation {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1200px) {
+  .skills .skill-card--ai-ml,
+  .skills .skill-card--cad,
+  .skills .skill-card--automation {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 575px) {
+  .skills .skill-card,
+  .skills .skill-card.is-featured {
+    padding: 18px 16px 18px;
+  }
+
+  .skills .skill-card-heading h3,
+  .skills .is-featured .skill-card-heading h3 {
+    font-size: 17px;
+  }
+
+  .skills .is-featured .skill-chip {
+    font-size: 14px;
+  }
 }
 
 /*--------------------------------------------------------------
