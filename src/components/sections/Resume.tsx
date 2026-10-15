@@ -1,4 +1,11 @@
-import { education, experience, extracurricular, leadership, type ResumeColumn } from '@/data/resume';
+import {
+  education,
+  experience,
+  extracurricular,
+  leadership,
+  resumeAchievements,
+  type ResumeColumn,
+} from '@/data/resume';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 
 function ResumeGroup({ column }: { column: ResumeColumn }) {
@@ -38,6 +45,7 @@ export function Resume() {
           <div className="col-lg-6">
             <ResumeGroup column={education} />
             <ResumeGroup column={extracurricular} />
+            <ResumeGroup column={resumeAchievements} />
           </div>
         </div>
       </div>

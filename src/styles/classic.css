@@ -716,16 +716,44 @@ section {
   background: #f7f8f9;
   padding: 5px 15px;
   display: inline-block;
+  max-width: 100%;
+  line-height: 1.4;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
+.resume .resume-item > p {
+  margin-bottom: 8px;
+}
+
 .resume .resume-item ul {
   padding-left: 20px;
+  margin-bottom: 0;
 }
 
 .resume .resume-item ul li {
-  padding-bottom: 10px;
+  padding-bottom: 6px;
+}
+
+/* breathing room between the grouped timelines in a column */
+.resume .resume-item + .resume-title {
+  margin-top: 36px;
+}
+
+@media (max-width: 575px) {
+  .resume .resume-title {
+    font-size: 22px;
+  }
+
+  .resume .resume-item h4 {
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .resume .resume-item h5 {
+    font-size: 15px;
+    padding: 5px 12px;
+  }
 }
 
 .resume .resume-item:last-child {
