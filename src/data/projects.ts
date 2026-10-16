@@ -19,6 +19,7 @@ export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
 export interface ProjectVideo {
   file: string;
   poster: string;
+  caption?: string;
 }
 
 export interface ProjectSection {
@@ -358,6 +359,22 @@ export const projects: Project[] = [
       'Work in progress. All values in the prototype are simulated / demonstration data — nothing here represents real field measurements.',
     images: [],
     placeholderIcon: 'bx-network-chart',
+    gallery: [
+      { name: 'overview', caption: 'Dashboard overview — prototype warning and field summary' },
+      { name: 'field-map', caption: 'Field overview — synthetic multi-well schematic' },
+      { name: 'well-state', caption: 'Virtual state of a selected well' },
+      { name: 'well-3d', caption: '3D well visualization — wellbore, rod string and SRP pump' },
+      { name: 'thermal-production', caption: 'Reservoir thermal behaviour and production prediction' },
+      { name: 'joint-optimization', caption: 'Joint CSS + SRP optimization' },
+    ],
+    galleryNote: 'Screenshots of the working prototype dashboard, running on synthetic data — not field measurements.',
+    videos: [
+      {
+        file: 'digital-twin-explainer.mp4',
+        poster: 'digital-twin-explainer-poster.jpg',
+        caption: 'Animated explainer of the digital-twin concept (motion graphics, not a live demo)',
+      },
+    ],
   },
   {
     slug: 'ar-visualization',

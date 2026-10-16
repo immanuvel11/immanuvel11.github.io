@@ -4,7 +4,7 @@ import { galleryAsset, projectAsset } from '@/lib/assets';
 
 type MediaItem =
   | { type: 'image'; src: string; thumb: string; caption?: string }
-  | { type: 'video'; src: string; thumb: string; poster: string }
+  | { type: 'video'; src: string; thumb: string; poster: string; caption?: string }
   | { type: 'pending'; caption: string };
 
 function buildItems(project: Project): MediaItem[] {
@@ -21,6 +21,7 @@ function buildItems(project: Project): MediaItem[] {
       src: projectAsset(project.slug, video.file),
       thumb: projectAsset(project.slug, video.poster),
       poster: projectAsset(project.slug, video.poster),
+      caption: video.caption,
     }),
   );
   // Screenshot slots: the real image if it has been added, else a labelled placeholder.
@@ -30,7 +31,7 @@ function buildItems(project: Project): MediaItem[] {
       ? { type: 'image', src: url, thumb: url, caption: shot.caption }
       : { type: 'pending', caption: shot.caption };
   });
-  return [...images, ...videos, ...gallery];
+  return [...images, ...gallery, ...videos];
 }
 
 /** Photo + video gallery with previous/next controls and a thumbnail strip. */
@@ -49,7 +50,7 @@ export function MediaViewer({ project }: { project: Project }) {
 
   const active = items[index];
   const step = (delta: number) => setIndex((current) => (current + delta + items.length) % items.length);
-  const caption = active.type === 'video' ? undefined : active.caption;
+  const caption = active.caption;
 
   return (
     <div>
