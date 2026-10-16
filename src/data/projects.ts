@@ -22,6 +22,8 @@ export interface ProjectVideo {
   caption?: string;
   /** Short clip played (muted) when a card is hovered; defaults to the first video. */
   preview?: boolean;
+  /** CSS aspect-ratio of the video, e.g. '4 / 5' for a portrait clip. */
+  aspect?: string;
 }
 
 export interface ProjectSection {
@@ -81,8 +83,12 @@ export interface Project {
   roleDetail?: string;
   gallery?: GalleryShot[];
   galleryNote?: string;
-  /** Shown as the large flagship card in the Projects grid. */
-  featured?: boolean;
+  /** Filters in which this project is highlighted (and listed first). */
+  highlightIn?: ProjectCategory[];
+  /** Small muted clip (file in public/projects/<slug>/) played when the card is hovered. */
+  previewClip?: string;
+  /** List videos before photos in the project viewer. */
+  leadWithVideo?: boolean;
   /** CSS aspect-ratio for the media viewer (default 4 / 3) — e.g. '3 / 4' for phone screenshots. */
   mediaAspect?: string;
   /** object-position for a gallery-based card cover (e.g. 'center 30%'). */
@@ -92,11 +98,10 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: 'genesis',
-    featured: true,
     name: 'GENESIS',
     subtitle: '12-DOF Quadruped Robot Dog',
     summary: 'Arduino Mega + PCA9685 quadruped with inverse kinematics and a Bluetooth Android app.',
-    categories: ['robotics', 'hardware', 'software'],
+    categories: ['robotics', 'hardware'],
     status: 'Functional prototype',
     inProgress: false,
     role: 'Individual project',
@@ -137,9 +142,15 @@ export const projects: Project[] = [
       'genesis-06-control-app.jpg',
     ],
     videos: [
-      { file: 'genesis-demo-1.mp4', poster: 'genesis-demo-1-poster.jpg' },
-      { file: 'genesis-demo-2.mp4', poster: 'genesis-demo-2-poster.jpg' },
+      {
+        file: 'genesis-build-log.mp4',
+        poster: 'genesis-build-log-poster.jpg',
+        caption: 'Build log — from the first printed leg (23 Oct 2025) to the first steps (29 Nov 2025)',
+        aspect: '4 / 5',
+      },
     ],
+    previewClip: 'genesis-build-log-preview.mp4',
+    leadWithVideo: true,
     codeUrl: 'https://github.com/immanuvel11/genesis-quadruped-robot',
   },
   {
@@ -147,7 +158,7 @@ export const projects: Project[] = [
     name: 'KIRA',
     subtitle: 'Health Monitoring & Assistance Robot',
     summary: 'Wheeled assistance robot with temperature sensing, a touchscreen and two mobile apps. Smart India Hackathon.',
-    categories: ['robotics', 'hardware', 'software'],
+    categories: ['robotics', 'hardware'],
     status: 'Functional prototype — built for Smart India Hackathon (SIH)',
     inProgress: false,
     role: 'Team of 6 — Team Lead',
@@ -191,6 +202,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'tifan-2026',
+    highlightIn: ['hardware'],
     name: 'TIFAN 2026',
     subtitle: 'Automated Seedling Transplanter',
     summary: 'Tractor-towed implement with a stepper gantry, comb gripper and conveyor, field-tested.',

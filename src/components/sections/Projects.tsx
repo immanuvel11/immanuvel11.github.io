@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { CATEGORY_LABELS, projects, type ProjectCategory } from '@/data/projects';
+import { CATEGORY_LABELS, projects, type Project, type ProjectCategory } from '@/data/projects';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { ProjectCard } from '@/components/projects/ProjectCard';
 import { ProjectModal } from '@/components/projects/ProjectModal';
@@ -24,9 +24,12 @@ export function Projects() {
     ];
   }, []);
 
-  const visible = projects.filter((project) => filter === 'all' || project.categories.includes(filter));
-  // The flagship card only makes sense when there are enough cards to build around it.
-  const featuredSlug = visible.length >= 3 ? visible.find((project) => project.featured)?.slug : undefined;
+  const isHighlighted = (project: Project) =>
+    filter !== 'all' && (project.highlightIn?.includes(filter) ?? false);
+  // Highlighted projects for the active filter come first.
+  const visible = projects
+    .filter((project) => filter === 'all' || project.categories.includes(filter))
+    .sort((a, b) => Number(isHighlighted(b)) - Number(isHighlighted(a)));
   const openProject = projects.find((project) => project.slug === openSlug) ?? null;
   const closeModal = useCallback(() => setOpenSlug(null), []);
 
@@ -57,7 +60,7 @@ export function Projects() {
             <ProjectCard
               key={project.slug}
               project={project}
-              featured={project.slug === featuredSlug}
+              highlighted={isHighlighted(project)}
               onOpen={() => setOpenSlug(project.slug)}
             />
           ))}

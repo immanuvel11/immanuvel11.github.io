@@ -852,9 +852,9 @@ section {
   box-shadow: 0 14px 30px rgba(5, 99, 187, 0.15);
 }
 
-.pcard.is-featured {
-  grid-column: span 2;
-  grid-row: span 2;
+.pcard.is-highlighted {
+  border-color: #0563bb;
+  box-shadow: 0 0 0 2px rgba(5, 99, 187, 0.28), 0 14px 30px rgba(5, 99, 187, 0.18);
 }
 
 .pcard-media {
@@ -863,16 +863,6 @@ section {
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: #0f1720;
-}
-
-.pcard.is-featured .pcard-media {
-  flex: 1 1 0;
-  aspect-ratio: auto;
-  min-height: 340px;
-}
-
-.pcard.is-featured .pcard-body {
-  flex: 0 0 auto;
 }
 
 .pcard-media > img,
@@ -959,10 +949,6 @@ section {
   line-height: 1.2;
   color: #fff;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
-}
-
-.pcard.is-featured .pcard-title h4 {
-  font-size: 30px;
 }
 
 .pcard-title p {
@@ -1076,10 +1062,6 @@ section {
   color: #45505b;
 }
 
-.pcard.is-featured .pcard-summary {
-  font-size: 15px;
-}
-
 .pcard-chips {
   display: flex;
   flex-wrap: wrap;
@@ -1113,34 +1095,11 @@ section {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 22px;
   }
-
-  .pcard.is-featured {
-    grid-column: span 2;
-    grid-row: auto;
-  }
-
-  .pcard.is-featured .pcard-media {
-    flex: 0 0 auto;
-    aspect-ratio: 16 / 9;
-    min-height: 0;
-  }
 }
 
 @media (max-width: 575px) {
   .portfolio .pcard-grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .pcard.is-featured {
-    grid-column: auto;
-  }
-
-  .pcard.is-featured .pcard-media {
-    aspect-ratio: 4 / 3;
-  }
-
-  .pcard.is-featured .pcard-title h4 {
-    font-size: 24px;
   }
 }
 

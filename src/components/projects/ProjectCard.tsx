@@ -5,11 +5,11 @@ import { galleryAsset, projectAsset } from '@/lib/assets';
 
 interface ProjectCardProps {
   project: Project;
-  featured?: boolean;
+  highlighted?: boolean;
   onOpen: () => void;
 }
 
-export function ProjectCard({ project, featured = false, onOpen }: ProjectCardProps) {
+export function ProjectCard({ project, highlighted = false, onOpen }: ProjectCardProps) {
   const reducedMotion = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [previewing, setPreviewing] = useState(false);
@@ -22,19 +22,20 @@ export function ProjectCard({ project, featured = false, onOpen }: ProjectCardPr
   const coverSrc = coverFile ? projectAsset(project.slug, coverFile) : galleryCover;
   const coverPosition = project.cover?.position ?? project.coverPosition;
   const tags = (project.tags ?? project.categories.map((category) => CATEGORY_LABELS[category])).join(' · ');
-  const ribbon = project.inProgress ? 'In progress' : (project.cardBadge ?? (featured ? 'Featured' : undefined));
-  const chips = project.technologies.slice(0, featured ? 6 : 4);
+  const ribbon = highlighted ? 'Highlight' : project.inProgress ? 'In progress' : project.cardBadge;
+  const chips = project.technologies.slice(0, 4);
 
   // Short muted preview loop, only on devices that really hover (not touch),
   // never under reduced motion, and only fetched the first time it is needed.
-  const preview = project.videos?.find((video) => video.preview) ?? project.videos?.[0];
-  const canPreview = Boolean(preview) && !reducedMotion;
+  const previewFile =
+    project.previewClip ?? (project.videos?.find((video) => video.preview) ?? project.videos?.[0])?.file;
+  const canPreview = Boolean(previewFile) && !reducedMotion;
 
   const startPreview = () => {
     const video = videoRef.current;
-    if (!canPreview || !preview || !video) return;
+    if (!canPreview || !previewFile || !video) return;
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    if (!video.getAttribute('src')) video.src = projectAsset(project.slug, preview.file);
+    if (!video.getAttribute('src')) video.src = projectAsset(project.slug, previewFile);
     video
       .play()
       .then(() => setPreviewing(true))
@@ -51,7 +52,7 @@ export function ProjectCard({ project, featured = false, onOpen }: ProjectCardPr
 
   return (
     <article
-      className={`pcard${featured ? ' is-featured' : ''}${previewing ? ' is-previewing' : ''}`}
+      className={`pcard${highlighted ? ' is-highlighted' : ''}${previewing ? ' is-previewing' : ''}`}
       onPointerEnter={(event) => {
         if (event.pointerType === 'mouse') startPreview();
       }}

@@ -4,7 +4,7 @@ import { galleryAsset, projectAsset } from '@/lib/assets';
 
 type MediaItem =
   | { type: 'image'; src: string; thumb: string; caption?: string }
-  | { type: 'video'; src: string; thumb: string; poster: string; caption?: string }
+  | { type: 'video'; src: string; thumb: string; poster: string; caption?: string; aspect?: string }
   | { type: 'pending'; caption: string };
 
 function buildItems(project: Project): MediaItem[] {
@@ -22,6 +22,7 @@ function buildItems(project: Project): MediaItem[] {
       thumb: projectAsset(project.slug, video.poster),
       poster: projectAsset(project.slug, video.poster),
       caption: video.caption,
+      aspect: video.aspect,
     }),
   );
   // Screenshot slots: the real image if it has been added, else a labelled placeholder.
@@ -34,7 +35,7 @@ function buildItems(project: Project): MediaItem[] {
     })
     // Unfinished slots are a to-do list for local development, not for visitors.
     .filter((item) => item.type !== 'pending' || import.meta.env.DEV);
-  return [...images, ...gallery, ...videos];
+  return project.leadWithVideo ? [...videos, ...images, ...gallery] : [...images, ...gallery, ...videos];
 }
 
 /** Photo + video gallery with previous/next controls and a thumbnail strip. */
@@ -54,12 +55,13 @@ export function MediaViewer({ project }: { project: Project }) {
   const active = items[index];
   const step = (delta: number) => setIndex((current) => (current + delta + items.length) % items.length);
   const caption = active.caption;
+  const aspect = (active.type === 'video' ? active.aspect : undefined) ?? project.mediaAspect;
 
   return (
     <div>
       <div
         className={`mv-main${active.type === 'pending' ? ' is-pending' : ''}`}
-        style={project.mediaAspect ? { aspectRatio: project.mediaAspect } : undefined}
+        style={aspect ? { aspectRatio: aspect } : undefined}
       >
         {active.type === 'image' ? (
           <img src={active.src} alt={active.caption ?? `${project.name} — photo ${index + 1}`} />
