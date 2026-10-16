@@ -4,6 +4,8 @@
 // results, metrics, dates or field data are claimed.
 // The robotic-arm entry follows the user's own project write-up; the planned
 // inverse kinematics is described as a next step, not as a feature.
+// The plain-English robot arm follows the user's own write-up. It runs in
+// simulation only, and its numbers are simulation results — keep it that way.
 // The Diet Point is a client project: it is described as "a small fitness-food
 // cafe" and carries only the facts and test metrics the user supplied — no
 // owner names, prices, sales figures, location or testimonials.
@@ -203,7 +205,6 @@ export const projects: Project[] = [
   },
   {
     slug: 'tifan-2026',
-    highlightIn: ['robotics'],
     name: 'TIFAN 2026',
     subtitle: 'Automated Seedling Transplanter',
     summary: 'Tractor-towed implement with a stepper gantry, comb gripper and conveyor, field-tested.',
@@ -252,6 +253,70 @@ export const projects: Project[] = [
       { file: 'tifan-demo-1.mp4', poster: 'tifan-demo-1-poster.jpg' },
       { file: 'tifan-demo-2.mp4', poster: 'tifan-demo-2-poster.jpg' },
     ],
+  },
+  {
+    slug: 'ros2-english-arm',
+    name: 'Plain-English Robot Arm',
+    subtitle: 'Vision-guided pick & place with ROS 2 — simulation',
+    summary:
+      'Type “Put the red cube in the blue bin” and a ROS 2 arm sees, plans, picks, checks and stays safe on its own — 84% success vs 16% for a traditionally programmed robot, in simulation.',
+    categories: ['robotics'],
+    highlightIn: ['robotics'],
+    status: 'Working in simulation',
+    inProgress: false,
+    cardBadge: 'Simulation',
+    sections: [
+      {
+        heading: 'Overview',
+        text: 'A robot arm you can give instructions to in plain English. In the demo I type “Put the red cube in the blue bin” and the arm does the whole job by itself. This version runs in simulation.',
+      },
+      {
+        heading: 'How it works',
+        bullets: [
+          'Sees — a 3D camera finds every object on the table and measures its position to about 1.5 mm. There is no trained model, so new objects work right away.',
+          'Plans — it works out the steps (pick the cube, place it in the bin) and asks for clarification if an instruction is ambiguous.',
+          'Acts — it picks and places with collision-free motion planning.',
+          'Checks — after each step it looks again with the camera to confirm it worked. If someone moves a part mid-task, it notices and re-plans.',
+          'Stays safe — it slows down when a person comes within 0.9 m, stops within 0.45 m, and the e-stop halts the arm in about 0.3 s.',
+        ],
+      },
+      {
+        heading: 'Built with',
+        text: 'Twelve ROS 2 packages on ROS 2 Humble, using MoveIt 2, ros2_control, Gazebo, Python and OpenCV, with an LLM task planner (Claude API) and an offline planner.',
+      },
+    ],
+    metrics: [
+      { value: '84%', label: 'task success over 76 randomised trials' },
+      { value: '16%', label: 'success for a traditionally programmed robot on the same arm' },
+      { value: '≈ 1.5 mm', label: 'object position accuracy from the 3D camera' },
+      { value: '≈ 0.3 s', label: 'for the e-stop to halt the arm' },
+    ],
+    metricsNote:
+      'Simulation results from randomised trials against a traditionally programmed robot on the same arm. The traditional robot only works when parts are exactly where it was taught; this one handled random positions, changing lighting, clutter and parts moved mid-task. Not measured on a physical robot.',
+    technologies: [
+      'ROS 2 Humble',
+      'MoveIt 2',
+      'ros2_control',
+      'Gazebo',
+      'Python',
+      'OpenCV',
+      'LLM task planner (Claude API)',
+      'Offline planner',
+    ],
+    images: [],
+    videos: [
+      {
+        file: 'ros2-english-arm-demo.mp4',
+        poster: 'ros2-english-arm-poster.jpg',
+        caption: 'Demo in simulation — typing “Put the red cube in the blue bin” (shown at 2× speed)',
+        aspect: '16 / 9',
+      },
+    ],
+    previewClip: 'ros2-english-arm-preview.mp4',
+    leadWithVideo: true,
+    mediaAspect: '16 / 9',
+    cover: { file: 'ros2-english-arm-poster.jpg', position: 'left center' },
+    placeholderIcon: 'bx-bot',
   },
   {
     slug: 'robotic-arm',
