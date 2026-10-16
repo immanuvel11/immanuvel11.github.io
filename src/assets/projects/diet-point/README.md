@@ -8,9 +8,13 @@ shows a "Screenshot coming soon" placeholder.
 |---|---|
 | `billing-counter` | Billing counter |
 | `owner-dashboard` | Owner dashboard — KPI tiles and sales chart |
-| `best-sellers-slow-movers` | Best sellers and slow movers |
-| `end-of-day-summary` | End-of-day summary |
-| `login-screen` | Login screen |
+| `expenses` | Expenses |
+| `login-screen` | Login screen (owner names blurred) |
+| `best-sellers-slow-movers` | Best sellers and slow movers — *not added yet* |
+| `end-of-day-summary` | End-of-day summary — *not added yet* |
+
+Slots whose file is missing show a "Screenshot coming soon" placeholder in `npm run dev`
+and are hidden on the built/live site, so visitors never see unfinished slots.
 
 Privacy: use the **practice** edition only (sample data). Before saving, make sure no
 owner names, PINs, real prices/sales figures or the shop's location are visible — the

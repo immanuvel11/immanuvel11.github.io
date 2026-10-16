@@ -25,12 +25,15 @@ function buildItems(project: Project): MediaItem[] {
     }),
   );
   // Screenshot slots: the real image if it has been added, else a labelled placeholder.
-  const gallery = (project.gallery ?? []).map((shot): MediaItem => {
-    const url = galleryAsset(project.slug, shot.name);
-    return url
-      ? { type: 'image', src: url, thumb: url, caption: shot.caption }
-      : { type: 'pending', caption: shot.caption };
-  });
+  const gallery = (project.gallery ?? [])
+    .map((shot): MediaItem => {
+      const url = galleryAsset(project.slug, shot.name);
+      return url
+        ? { type: 'image', src: url, thumb: url, caption: shot.caption }
+        : { type: 'pending', caption: shot.caption };
+    })
+    // Unfinished slots are a to-do list for local development, not for visitors.
+    .filter((item) => item.type !== 'pending' || import.meta.env.DEV);
   return [...images, ...gallery, ...videos];
 }
 

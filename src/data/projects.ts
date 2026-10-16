@@ -314,13 +314,15 @@ export const projects: Project[] = [
     images: [],
     placeholderIcon: 'bx-receipt',
     gallery: [
-      { name: 'billing-counter', caption: 'Billing counter' },
-      { name: 'owner-dashboard', caption: 'Owner dashboard — KPI tiles and sales chart' },
+      { name: 'billing-counter', caption: 'Billing counter — dine-in or takeaway, discount, UPI / cash / card' },
+      { name: 'owner-dashboard', caption: 'Owner dashboard — sales, bills, average bill, costs and profit' },
+      { name: 'expenses', caption: 'Expenses — rent, gas, salary and other costs counted in profit' },
+      { name: 'login-screen', caption: 'Owner login — tap a name, then enter a PIN' },
+      // Not captured yet: shown only while developing locally, hidden on the live site.
       { name: 'best-sellers-slow-movers', caption: 'Best sellers and slow movers' },
       { name: 'end-of-day-summary', caption: 'End-of-day summary' },
-      { name: 'login-screen', caption: 'Login screen' },
     ],
-    galleryNote: 'Screenshots are from the practice edition, which uses sample data only.',
+    galleryNote: 'Screenshots contain no real business data; owner names are blurred.',
   },
   {
     slug: 'digital-twin',
