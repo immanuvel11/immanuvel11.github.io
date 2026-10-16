@@ -9,6 +9,7 @@ export function ProjectCard({ project, onOpen }: { project: Project; onOpen: () 
     .find((url) => url !== undefined);
   const coverSrc = coverFile ? projectAsset(project.slug, coverFile) : galleryCover;
   const categories = (project.tags ?? project.categories.map((category) => CATEGORY_LABELS[category])).join(' · ');
+  const coverPosition = project.cover?.position ?? project.coverPosition;
   const ribbon = project.inProgress ? 'In progress' : project.cardBadge;
 
   return (
@@ -19,7 +20,7 @@ export function ProjectCard({ project, onOpen }: { project: Project; onOpen: () 
             src={coverSrc}
             alt=""
             loading="lazy"
-            style={project.cover?.position ? { objectPosition: project.cover.position } : undefined}
+            style={coverPosition ? { objectPosition: coverPosition } : undefined}
           />
         ) : (
           <div className="portfolio-placeholder" aria-hidden="true">

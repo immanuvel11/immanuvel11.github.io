@@ -57,7 +57,10 @@ export function MediaViewer({ project }: { project: Project }) {
 
   return (
     <div>
-      <div className={`mv-main${active.type === 'pending' ? ' is-pending' : ''}`}>
+      <div
+        className={`mv-main${active.type === 'pending' ? ' is-pending' : ''}`}
+        style={project.mediaAspect ? { aspectRatio: project.mediaAspect } : undefined}
+      >
         {active.type === 'image' ? (
           <img src={active.src} alt={active.caption ?? `${project.name} — photo ${index + 1}`} />
         ) : active.type === 'video' ? (

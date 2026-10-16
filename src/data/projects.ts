@@ -79,6 +79,10 @@ export interface Project {
   roleDetail?: string;
   gallery?: GalleryShot[];
   galleryNote?: string;
+  /** CSS aspect-ratio for the media viewer (default 4 / 3) — e.g. '3 / 4' for phone screenshots. */
+  mediaAspect?: string;
+  /** object-position for a gallery-based card cover (e.g. 'center 30%'). */
+  coverPosition?: string;
 }
 
 export const projects: Project[] = [
@@ -323,6 +327,55 @@ export const projects: Project[] = [
       { name: 'end-of-day-summary', caption: 'End-of-day summary' },
     ],
     galleryNote: 'Screenshots contain no real business data; owner names are blurred.',
+  },
+  {
+    slug: 'toneshift',
+    name: 'ToneShift',
+    subtitle: 'Chord Transposer & Tuner',
+    summary:
+      'Self-initiated app that shifts chord progressions by semitones and tunes a guitar from the microphone — built in my first year to solve a problem I had as a musician.',
+    categories: ['software'],
+    tags: ['Software', 'Music Technology'],
+    status: 'Working app — first-year personal project',
+    inProgress: false,
+    role: 'Self-initiated project',
+    roleDetail:
+      'Created in my first year as a self-initiated project. Rather than keep transposing chords by hand, I decided to build my own application — combining my interest in music with software development and practical problem-solving.',
+    sections: [
+      {
+        heading: 'Overview',
+        text: 'ToneShift is a music utility app that combines a chord transposer with a guitar tuner. I made it in my first year of engineering, inspired by a real problem I ran into as a musician.',
+      },
+      {
+        heading: 'The problem',
+        text: 'As a musician, I often needed to move chords into a different key. Working that out by hand every time was inconvenient, so I looked for a simpler way instead of relying on manual calculation.',
+      },
+      {
+        heading: 'The solution',
+        text: 'I built my own app. Enter a chord progression, shift it up or down one semitone at a time, and read the transposed chords along with a running step count. A tuner in the same app lets a guitarist pick a string and tune it using the device’s microphone.',
+      },
+      {
+        heading: 'Key features',
+        bullets: [
+          'Chord transposition: enter a progression and move every chord up or down in semitone steps.',
+          'Step counter showing how far the progression has been transposed.',
+          'Guitar tuner for the six standard-tuning strings (E, A, D, G, B, E).',
+          'Live pitch detection from the microphone, with the detected frequency in Hz and a clear tune up / tune down / in-tune result.',
+          'Simple two-button interface — Transpose and Tuner — designed for quick use by musicians.',
+        ],
+      },
+    ],
+    techHeading: 'Technology stack',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'Web Audio API'],
+    images: [],
+    placeholderIcon: 'bx-music',
+    gallery: [
+      { name: 'transposer', caption: 'Chord transposer — enter a progression and shift it by semitones' },
+      { name: 'tuner', caption: 'Guitar tuner — choose a string and tune using the microphone' },
+    ],
+    galleryNote: 'Screenshots from the app running on an Android phone.',
+    mediaAspect: '3 / 4',
+    coverPosition: 'center 28%',
   },
   {
     slug: 'digital-twin',
