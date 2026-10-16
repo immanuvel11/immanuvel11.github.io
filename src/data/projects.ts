@@ -1,6 +1,6 @@
 // Project case studies. Built projects (GENESIS, KIRA, TIFAN 2026) are sourced
-// from the CV, the user's project folders, and the firmware itself. The two
-// in-progress entries contain only what the user has stated about them — no
+// from the CV, the user's project folders, and the firmware itself. The
+// in-progress entry contains only what the user has stated about them — no
 // results, metrics, dates or field data are claimed.
 // The Diet Point is a client project: it is described as "a small fitness-food
 // cafe" and carries only the facts and test metrics the user supplied — no
@@ -360,36 +360,24 @@ export const projects: Project[] = [
     images: [],
     placeholderIcon: 'bx-network-chart',
     gallery: [
-      { name: 'overview', caption: 'Dashboard overview — prototype warning and field summary' },
-      { name: 'field-map', caption: 'Field overview — synthetic multi-well schematic' },
-      { name: 'well-state', caption: 'Virtual state of a selected well' },
-      { name: 'well-3d', caption: '3D well visualization — wellbore, rod string and SRP pump' },
-      { name: 'thermal-production', caption: 'Reservoir thermal behaviour and production prediction' },
-      { name: 'joint-optimization', caption: 'Joint CSS + SRP optimization' },
+      { name: 'overview', caption: 'Dashboard overview — field summary; data mode: synthetic / physics-simulated' },
+      { name: 'unity-3d-twin', caption: 'Interactive 3D pumpjack digital twin (Unity) with live telemetry panels' },
+      { name: 'thermal-response', caption: 'Reservoir and wellbore thermal response' },
+      { name: 'production-response', caption: 'Predicted production response' },
+      { name: 'what-if', caption: 'What-if analysis — adjust operating conditions and compare' },
     ],
     galleryNote: 'Screenshots of the working prototype dashboard, running on synthetic data — not field measurements.',
     videos: [
       {
-        file: 'digital-twin-explainer.mp4',
-        poster: 'digital-twin-explainer-poster.jpg',
-        caption: 'Animated explainer of the digital-twin concept (motion graphics, not a live demo)',
+        file: 'flowforge-walkthrough.mp4',
+        poster: 'flowforge-walkthrough-poster.jpg',
+        caption: 'FlowForge project walkthrough (narrated) — prototype on synthetic data',
+      },
+      {
+        file: 'physical-model-demo.mp4',
+        poster: 'physical-model-demo-poster.jpg',
+        caption: 'Physical pumpjack model running beside the Unity digital twin',
       },
     ],
-  },
-  {
-    slug: 'ar-visualization',
-    name: 'AR Visualization',
-    subtitle: 'Augmented-reality medical / technical visualization',
-    summary: 'Early-stage: Unity + Vuforia AR with computer-vision, segmentation and CNN-based models.',
-    categories: ['ai-ml', 'software'],
-    status: 'Early-stage / exploratory',
-    inProgress: true,
-    approach: [
-      'Built on Unity and Vuforia for augmented-reality visualization of medical / technical content.',
-      'Explores computer-vision and segmentation concepts and CNN-based models.',
-    ],
-    technologies: ['Unity', 'Vuforia', 'Computer Vision', 'Segmentation', 'CNN'],
-    images: [],
-    placeholderIcon: 'bx-cube-alt',
   },
 ];

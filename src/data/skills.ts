@@ -24,7 +24,7 @@ export type SkillIcon =
 export interface Skill {
   label: string;
   icon: SkillIcon;
-  /** Only used so far inside an in-progress prototype (digital twin / AR). */
+  /** Only used so far inside the in-progress digital-twin prototype. */
   early?: boolean;
 }
 

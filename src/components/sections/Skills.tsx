@@ -51,8 +51,7 @@ export function Skills() {
 
         <p className="skills-legend">
           <span className="skills-legend-swatch" aria-hidden="true" />
-          Dashed outline: used so far in in-progress prototypes (digital twin, AR) using synthetic
-          data.
+          Dashed outline: used so far in my in-progress digital-twin prototype (synthetic data).
         </p>
       </div>
     </section>
