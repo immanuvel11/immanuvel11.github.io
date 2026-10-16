@@ -8,11 +8,10 @@
 // cafe" and carries only the facts and test metrics the user supplied — no
 // owner names, prices, sales figures, location or testimonials.
 
-export type ProjectCategory = 'robotics' | 'hardware' | 'software' | 'ai-ml' | 'automation';
+export type ProjectCategory = 'robotics' | 'software' | 'ai-ml' | 'automation';
 
 export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   robotics: 'Robotics',
-  hardware: 'Hardware',
   software: 'Software',
   'ai-ml': 'AI & ML',
   automation: 'Automation',
@@ -103,7 +102,7 @@ export const projects: Project[] = [
     name: 'GENESIS',
     subtitle: '12-DOF Quadruped Robot Dog',
     summary: 'Arduino Mega + PCA9685 quadruped with inverse kinematics and a Bluetooth Android app.',
-    categories: ['robotics', 'hardware'],
+    categories: ['robotics'],
     status: 'Functional prototype',
     inProgress: false,
     role: 'Individual project',
@@ -160,7 +159,7 @@ export const projects: Project[] = [
     name: 'KIRA',
     subtitle: 'Health Monitoring & Assistance Robot',
     summary: 'Wheeled assistance robot with temperature sensing, a touchscreen and two mobile apps. Smart India Hackathon.',
-    categories: ['robotics', 'hardware'],
+    categories: ['robotics'],
     status: 'Functional prototype — built for Smart India Hackathon (SIH)',
     inProgress: false,
     role: 'Team of 6 — Team Lead',
@@ -204,11 +203,11 @@ export const projects: Project[] = [
   },
   {
     slug: 'tifan-2026',
-    highlightIn: ['hardware'],
+    highlightIn: ['robotics'],
     name: 'TIFAN 2026',
     subtitle: 'Automated Seedling Transplanter',
     summary: 'Tractor-towed implement with a stepper gantry, comb gripper and conveyor, field-tested.',
-    categories: ['robotics', 'hardware', 'automation'],
+    categories: ['robotics', 'automation'],
     status: 'Field-tested — Participant, TIFAN 2026',
     inProgress: false,
     role: 'Team Electronics Lead',
@@ -260,7 +259,7 @@ export const projects: Project[] = [
     subtitle: 'Measured, rebuilt in CAD, printed and calibrated',
     summary:
       'Instead of assembling a kit, I took a reference arm apart, rebuilt it from scratch in Fusion 360, 3D-printed it and got it moving with an Arduino Mega and a PCA9685.',
-    categories: ['robotics', 'hardware'],
+    categories: ['robotics'],
     status: 'Working prototype — inverse kinematics is the next step',
     inProgress: false,
     role: 'Personal project',

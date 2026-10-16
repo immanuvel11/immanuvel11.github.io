@@ -6,7 +6,7 @@ import { ProjectModal } from '@/components/projects/ProjectModal';
 
 type Filter = 'all' | ProjectCategory;
 
-const CATEGORY_ORDER: ProjectCategory[] = ['robotics', 'hardware', 'software', 'ai-ml', 'automation'];
+const CATEGORY_ORDER: ProjectCategory[] = ['robotics', 'software', 'ai-ml', 'automation'];
 
 export function Projects() {
   const [filter, setFilter] = useState<Filter>('all');
