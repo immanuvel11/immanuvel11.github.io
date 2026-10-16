@@ -110,6 +110,11 @@ export const extracurricular: ResumeColumn = {
       period: '2025 – 2028',
     },
     {
+      title: 'Video Editor',
+      period: 'Since 10th Standard',
+      description: "I've been editing videos since my 10th standard.",
+    },
+    {
       title: 'Musician',
       period: 'October 2020 – Present',
       description:
