@@ -1259,6 +1259,49 @@ body.modal-open {
   font-size: 14.5px;
 }
 
+.pm-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.pm-metric {
+  margin: 0;
+  padding: 12px 14px;
+  background: #f4f8fd;
+  border: 1px solid #dbe7f5;
+  border-radius: 6px;
+}
+
+.pm-metric dt {
+  font-family: "Raleway", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #0563bb;
+}
+
+.pm-metric dd {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #45505b;
+}
+
+.pm-info p.pm-metrics-note {
+  margin-top: 8px;
+  font-size: 13px;
+  font-style: italic;
+  color: #728394;
+}
+
+@media (max-width: 400px) {
+  .pm-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .arch-chain {
   list-style: none;
   margin: 0;
@@ -1441,4 +1484,57 @@ body.modal-open {
   font-size: 26px;
   color: #fff;
   background: rgba(0, 0, 0, 0.3);
+}
+
+/* screenshot slots that have not been added yet */
+.mv-main.is-pending {
+  background: #eaf2fb;
+  border: 2px dashed #b9cfe8;
+}
+
+.mv-pending {
+  text-align: center;
+  color: #0563bb;
+}
+
+.mv-pending i {
+  font-size: 72px;
+  line-height: 1;
+}
+
+.mv-pending p {
+  margin: 8px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #45505b;
+}
+
+.mv-thumb.is-pending {
+  background: #eaf2fb;
+  border-style: dashed;
+  border-color: #b9cfe8;
+}
+
+.mv-thumb.is-pending.active {
+  border-style: solid;
+  border-color: #0563bb;
+}
+
+.mv-thumb.is-pending .bx {
+  color: #0563bb;
+  background: none;
+}
+
+.pm-info .mv-caption,
+.mv-caption {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #45505b;
+}
+
+.mv-note {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: #728394;
 }

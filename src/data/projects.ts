@@ -2,6 +2,9 @@
 // from the CV, the user's project folders, and the firmware itself. The two
 // in-progress entries contain only what the user has stated about them — no
 // results, metrics, dates or field data are claimed.
+// The Diet Point is a client project: it is described as "a small fitness-food
+// cafe" and carries only the facts and test metrics the user supplied — no
+// owner names, prices, sales figures, location or testimonials.
 
 export type ProjectCategory = 'robotics' | 'hardware' | 'software' | 'ai-ml' | 'automation';
 
@@ -16,6 +19,26 @@ export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
 export interface ProjectVideo {
   file: string;
   poster: string;
+}
+
+export interface ProjectSection {
+  heading: string;
+  text?: string;
+  bullets?: string[];
+}
+
+export interface ProjectMetric {
+  value: string;
+  label: string;
+}
+
+/**
+ * A screenshot slot. The image lives in src/assets/projects/<slug>/ as
+ * <name>.png | .jpg | .webp; until that file exists a placeholder is shown.
+ */
+export interface GalleryShot {
+  name: string;
+  caption: string;
 }
 
 export interface Project {
@@ -41,6 +64,20 @@ export interface Project {
   /** boxicons class shown on the card when there is no photo yet. */
   placeholderIcon?: string;
   codeUrl?: string;
+  /** Display tags that replace the category labels on the card and in the modal. */
+  tags?: string[];
+  /** Ribbon on the card photo (in-progress projects always show "In progress"). */
+  cardBadge?: string;
+  /** Free-form case-study sections, rendered in order before the problem/approach blocks. */
+  sections?: ProjectSection[];
+  metrics?: ProjectMetric[];
+  metricsNote?: string;
+  /** Heading for the technologies block (default "Technologies"). */
+  techHeading?: string;
+  /** Longer description of the user's role, shown as its own block. */
+  roleDetail?: string;
+  gallery?: GalleryShot[];
+  galleryNote?: string;
 }
 
 export const projects: Project[] = [
@@ -192,6 +229,97 @@ export const projects: Project[] = [
       { file: 'tifan-demo-1.mp4', poster: 'tifan-demo-1-poster.jpg' },
       { file: 'tifan-demo-2.mp4', poster: 'tifan-demo-2-poster.jpg' },
     ],
+  },
+  {
+    slug: 'diet-point',
+    name: 'The Diet Point',
+    subtitle: 'Offline Billing & Owner Dashboard',
+    summary:
+      'Client project: an offline billing and business dashboard for a small fitness-food café — fast billing, sales and profit analytics, menu management and automatic backups, with no cloud or subscription.',
+    categories: ['software', 'automation'],
+    tags: ['Software', 'Business Automation', 'Client Project'],
+    status: 'Completed',
+    inProgress: false,
+    cardBadge: 'Completed',
+    role: 'Sole developer',
+    roleDetail:
+      'Sole developer — responsible for requirements, design, development, testing, packaging, delivery and owner documentation.',
+    sections: [
+      {
+        heading: 'Overview',
+        text: 'An offline billing and business-management application designed for a small fitness-food café. The billing counter and the owners’ dashboard live in a single Windows application that runs entirely on the shop’s own computer — no cloud services and no monthly subscription.',
+      },
+      {
+        heading: 'The challenge',
+        text: 'A small café counter needs fast billing, accurate profit calculations, clear visibility into sales, a simple installation, complete offline operation and reliable protection of its data.',
+      },
+      {
+        heading: 'The solution',
+        text: 'A Python, FastAPI, SQLite and JavaScript application that combines billing, reporting, menu management, expense tracking and data recovery in one tool.',
+      },
+      {
+        heading: 'Key features',
+        bullets: [
+          'Fast billing with searchable product tiles.',
+          'Dine-in and takeaway orders.',
+          'UPI, cash and card payment methods.',
+          'Discounts and combo savings.',
+          'Sales and profit dashboard.',
+          'Best sellers and slow-moving products.',
+          'Owner login, shift tracking and audit logs.',
+          'Menu management and Excel/CSV import.',
+          'Daily closing summaries and report exports.',
+          'Automatic backups and recovery.',
+          'Separate practice mode for training.',
+          'Simple Windows installation.',
+        ],
+      },
+      {
+        heading: 'Under the hood',
+        bullets: [
+          'Local architecture: a FastAPI backend and a SQLite database run on the café’s own Windows computer and serve the JavaScript interface — nothing depends on the cloud.',
+          'Transactional bill saving: a bill is stored completely or not at all.',
+          'Money is stored as integer paise rather than floating-point rupees, so totals and profit stay exact.',
+          'Versioned database migrations let the data structure change safely between releases.',
+          'Startup integrity checks run when the app opens.',
+          'Offline-first by design: the app, its data and the interface (a PWA with a service worker) are all local.',
+        ],
+      },
+    ],
+    metrics: [
+      { value: '150,000+', label: 'bills in testing' },
+      { value: '< 50 ms', label: 'load time for every tested screen (300 ms target)' },
+      { value: '≈ 1 s', label: 'to create a three-item bill' },
+      { value: '76', label: 'automated tests covering critical workflows and data integrity' },
+    ],
+    metricsNote:
+      'Measured test results from my own testing — not a guarantee of performance in every environment.',
+    techHeading: 'Tech stack',
+    technologies: [
+      'Python',
+      'FastAPI',
+      'SQLite',
+      'JavaScript (ES modules)',
+      'HTML',
+      'CSS',
+      'PWA',
+      'Service Workers',
+      'SVG',
+      'openpyxl',
+      'pytest',
+      'PowerShell',
+      'Windows packaging',
+    ],
+    images: [],
+    placeholderIcon: 'bx-receipt',
+    gallery: [
+      { name: 'billing-counter', caption: 'Billing counter' },
+      { name: 'owner-dashboard', caption: 'Owner dashboard — KPI tiles and sales chart' },
+      { name: 'best-sellers-slow-movers', caption: 'Best sellers and slow movers' },
+      { name: 'end-of-day-summary', caption: 'End-of-day summary' },
+      { name: 'login-screen', caption: 'Login screen' },
+    ],
+    galleryNote: 'Screenshots are from the practice edition, which uses sample data only.',
   },
   {
     slug: 'digital-twin',

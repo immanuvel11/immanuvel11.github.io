@@ -1,16 +1,22 @@
 import { CATEGORY_LABELS, type Project } from '@/data/projects';
-import { projectAsset } from '@/lib/assets';
+import { galleryAsset, projectAsset } from '@/lib/assets';
 
 export function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void }) {
   const coverFile = project.cover?.file ?? project.images[0];
-  const categories = project.categories.map((category) => CATEGORY_LABELS[category]).join(' · ');
+  // Screenshot-based projects use the first screenshot that has been added.
+  const galleryCover = project.gallery
+    ?.map((shot) => galleryAsset(project.slug, shot.name))
+    .find((url) => url !== undefined);
+  const coverSrc = coverFile ? projectAsset(project.slug, coverFile) : galleryCover;
+  const categories = (project.tags ?? project.categories.map((category) => CATEGORY_LABELS[category])).join(' · ');
+  const ribbon = project.inProgress ? 'In progress' : project.cardBadge;
 
   return (
     <div className="col-lg-4 col-md-6 portfolio-item">
       <div className="portfolio-wrap">
-        {coverFile ? (
+        {coverSrc ? (
           <img
-            src={projectAsset(project.slug, coverFile)}
+            src={coverSrc}
             alt=""
             loading="lazy"
             style={project.cover?.position ? { objectPosition: project.cover.position } : undefined}
@@ -21,7 +27,7 @@ export function ProjectCard({ project, onOpen }: { project: Project; onOpen: () 
           </div>
         )}
 
-        {project.inProgress ? <span className="portfolio-status">In progress</span> : null}
+        {ribbon ? <span className="portfolio-status">{ribbon}</span> : null}
 
         <div className="portfolio-info">
           <h4>{project.name}</h4>

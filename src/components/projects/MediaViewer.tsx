@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import type { Project } from '@/data/projects';
-import { projectAsset } from '@/lib/assets';
+import { galleryAsset, projectAsset } from '@/lib/assets';
 
 type MediaItem =
-  | { type: 'image'; src: string; thumb: string }
-  | { type: 'video'; src: string; thumb: string; poster: string };
+  | { type: 'image'; src: string; thumb: string; caption?: string }
+  | { type: 'video'; src: string; thumb: string; poster: string }
+  | { type: 'pending'; caption: string };
 
 function buildItems(project: Project): MediaItem[] {
   const images = project.images.map(
@@ -22,7 +23,14 @@ function buildItems(project: Project): MediaItem[] {
       poster: projectAsset(project.slug, video.poster),
     }),
   );
-  return [...images, ...videos];
+  // Screenshot slots: the real image if it has been added, else a labelled placeholder.
+  const gallery = (project.gallery ?? []).map((shot): MediaItem => {
+    const url = galleryAsset(project.slug, shot.name);
+    return url
+      ? { type: 'image', src: url, thumb: url, caption: shot.caption }
+      : { type: 'pending', caption: shot.caption };
+  });
+  return [...images, ...videos, ...gallery];
 }
 
 /** Photo + video gallery with previous/next controls and a thumbnail strip. */
@@ -41,16 +49,22 @@ export function MediaViewer({ project }: { project: Project }) {
 
   const active = items[index];
   const step = (delta: number) => setIndex((current) => (current + delta + items.length) % items.length);
+  const caption = active.type === 'video' ? undefined : active.caption;
 
   return (
     <div>
-      <div className="mv-main">
+      <div className={`mv-main${active.type === 'pending' ? ' is-pending' : ''}`}>
         {active.type === 'image' ? (
-          <img src={active.src} alt={`${project.name} — photo ${index + 1}`} />
-        ) : (
+          <img src={active.src} alt={active.caption ?? `${project.name} — photo ${index + 1}`} />
+        ) : active.type === 'video' ? (
           <video key={active.src} src={active.src} poster={active.poster} controls preload="none">
             <track kind="captions" />
           </video>
+        ) : (
+          <div className="mv-pending">
+            <i className="bx bx-image" aria-hidden="true" />
+            <p>Screenshot coming soon</p>
+          </div>
         )}
 
         {items.length > 1 ? (
@@ -68,23 +82,33 @@ export function MediaViewer({ project }: { project: Project }) {
         ) : null}
       </div>
 
+      {caption ? <p className="mv-caption">{caption}</p> : null}
+
       {items.length > 1 ? (
         <div className="mv-thumbs">
           {items.map((item, itemIndex) => (
             <button
-              key={item.src}
+              key={item.type === 'pending' ? `pending-${itemIndex}` : item.src}
               type="button"
-              className={`mv-thumb${itemIndex === index ? ' active' : ''}`}
-              aria-label={`Show ${item.type} ${itemIndex + 1}`}
+              className={`mv-thumb${itemIndex === index ? ' active' : ''}${item.type === 'pending' ? ' is-pending' : ''}`}
+              aria-label={
+                item.type === 'pending' ? `Show ${item.caption} (coming soon)` : `Show ${item.type} ${itemIndex + 1}`
+              }
               aria-current={itemIndex === index}
               onClick={() => setIndex(itemIndex)}
             >
-              <img src={item.thumb} alt="" loading="lazy" />
+              {item.type === 'pending' ? (
+                <i className="bx bx-image" aria-hidden="true" />
+              ) : (
+                <img src={item.thumb} alt="" loading="lazy" />
+              )}
               {item.type === 'video' ? <i className="bx bx-play-circle" aria-hidden="true" /> : null}
             </button>
           ))}
         </div>
       ) : null}
+
+      {project.galleryNote ? <p className="mv-note">{project.galleryNote}</p> : null}
     </div>
   );
 }
