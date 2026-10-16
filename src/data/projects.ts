@@ -2,6 +2,8 @@
 // from the CV, the user's project folders, and the firmware itself. The
 // in-progress entry contains only what the user has stated about them — no
 // results, metrics, dates or field data are claimed.
+// The robotic-arm entry follows the user's own project write-up; the planned
+// inverse kinematics is described as a next step, not as a feature.
 // The Diet Point is a client project: it is described as "a small fitness-food
 // cafe" and carries only the facts and test metrics the user supplied — no
 // owner names, prices, sales figures, location or testimonials.
@@ -251,6 +253,67 @@ export const projects: Project[] = [
       { file: 'tifan-demo-1.mp4', poster: 'tifan-demo-1-poster.jpg' },
       { file: 'tifan-demo-2.mp4', poster: 'tifan-demo-2-poster.jpg' },
     ],
+  },
+  {
+    slug: 'robotic-arm',
+    name: 'Robotic Arm — Reverse Engineering',
+    subtitle: 'Measured, rebuilt in CAD, printed and calibrated',
+    summary:
+      'Instead of assembling a kit, I took a reference arm apart, rebuilt it from scratch in Fusion 360, 3D-printed it and got it moving with an Arduino Mega and a PCA9685.',
+    categories: ['robotics', 'hardware'],
+    status: 'Working prototype — inverse kinematics is the next step',
+    inProgress: false,
+    role: 'Personal project',
+    roleDetail:
+      'Personal project — I did the teardown and measurement, CAD modelling, 3D printing, wiring, assembly and calibration myself.',
+    sections: [
+      {
+        heading: 'Overview',
+        text: 'I didn’t want to just assemble a robotic arm — I wanted to understand it. So I reverse-engineered one: I took a reference arm apart, measured it, rebuilt it from scratch in CAD, printed it and brought it to life with an Arduino Mega.',
+      },
+      {
+        heading: 'How it went',
+        bullets: [
+          'Teardown & measure — took a reference arm apart and measured every link, joint and servo mount.',
+          'Rebuilt in CAD — modelled each part from scratch in Fusion 360 and set up the revolute joints to check the motion before printing anything.',
+          'Print & wire — 3D-printed the parts and wired the servos to an Arduino Mega through a PCA9685 servo driver.',
+          'Assemble & calibrate — set home angles for each joint and tuned the PWM ranges until the movement was smooth.',
+          'First motion — it works!',
+        ],
+      },
+      {
+        heading: 'Key takeaway',
+        text: 'Measuring a part properly teaches you more than copying it. Every hole and clearance in the original was there for a reason, and I only saw why when I had to rebuild it myself.',
+      },
+      {
+        heading: 'Next step',
+        text: 'Adding inverse kinematics so the arm can reach a target point instead of moving joint by joint. This is planned — it is not implemented yet.',
+      },
+    ],
+    technologies: [
+      'Fusion 360',
+      '3D printing',
+      'Arduino Mega',
+      'PCA9685 servo driver',
+      'Servo motors',
+      'PWM calibration',
+    ],
+    result:
+      'Working arm: the joints move smoothly after home-angle and PWM-range calibration. Inverse kinematics is the next step.',
+    images: [],
+    videos: [
+      {
+        file: 'robotic-arm-reverse-engineering.mp4',
+        poster: 'robotic-arm-poster.jpg',
+        caption: 'Project walkthrough — from teardown to first motion',
+        aspect: '16 / 9',
+      },
+    ],
+    previewClip: 'robotic-arm-preview.mp4',
+    leadWithVideo: true,
+    mediaAspect: '16 / 9',
+    cover: { file: 'robotic-arm-poster.jpg', position: 'center 40%' },
+    placeholderIcon: 'bx-bot',
   },
   {
     slug: 'diet-point',
