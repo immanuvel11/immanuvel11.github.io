@@ -20,6 +20,8 @@ export interface ProjectVideo {
   file: string;
   poster: string;
   caption?: string;
+  /** Short clip played (muted) when a card is hovered; defaults to the first video. */
+  preview?: boolean;
 }
 
 export interface ProjectSection {
@@ -79,6 +81,8 @@ export interface Project {
   roleDetail?: string;
   gallery?: GalleryShot[];
   galleryNote?: string;
+  /** Shown as the large flagship card in the Projects grid. */
+  featured?: boolean;
   /** CSS aspect-ratio for the media viewer (default 4 / 3) — e.g. '3 / 4' for phone screenshots. */
   mediaAspect?: string;
   /** object-position for a gallery-based card cover (e.g. 'center 30%'). */
@@ -88,6 +92,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: 'genesis',
+    featured: true,
     name: 'GENESIS',
     subtitle: '12-DOF Quadruped Robot Dog',
     summary: 'Arduino Mega + PCA9685 quadruped with inverse kinematics and a Bluetooth Android app.',
@@ -432,6 +437,7 @@ export const projects: Project[] = [
         file: 'physical-model-demo.mp4',
         poster: 'physical-model-demo-poster.jpg',
         caption: 'Physical pumpjack model running beside the Unity digital twin',
+        preview: true,
       },
     ],
   },

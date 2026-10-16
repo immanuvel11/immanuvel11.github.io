@@ -25,6 +25,8 @@ export function Projects() {
   }, []);
 
   const visible = projects.filter((project) => filter === 'all' || project.categories.includes(filter));
+  // The flagship card only makes sense when there are enough cards to build around it.
+  const featuredSlug = visible.length >= 3 ? visible.find((project) => project.featured)?.slug : undefined;
   const openProject = projects.find((project) => project.slug === openSlug) ?? null;
   const closeModal = useCallback(() => setOpenSlug(null), []);
 
@@ -50,9 +52,14 @@ export function Projects() {
           </div>
         </div>
 
-        <div className="row portfolio-container">
+        <div className="pcard-grid">
           {visible.map((project) => (
-            <ProjectCard key={project.slug} project={project} onOpen={() => setOpenSlug(project.slug)} />
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              featured={project.slug === featuredSlug}
+              onOpen={() => setOpenSlug(project.slug)}
+            />
           ))}
         </div>
       </div>
