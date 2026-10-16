@@ -4,6 +4,8 @@ export interface ResumeEntry {
   place?: string;
   description?: string;
   bullets?: string[];
+  /** Optional Boxicons glyph shown before the title. */
+  icon?: string;
 }
 
 export interface ResumeColumn {
@@ -61,22 +63,22 @@ export const experience: ResumeColumn = {
   ],
 };
 
-export const leadership: ResumeColumn = {
-  heading: 'Leadership & Project Experience',
+// Only achievements confirmed by the user or already in the portfolio data
+// (CV / achievements.ts). No competition names, dates or details beyond that.
+export const recognition: ResumeColumn = {
+  heading: 'Achievements & Recognition',
   entries: [
     {
-      title: 'Team Lead — KIRA',
-      period: 'Smart India Hackathon',
-      place: 'Team of 6',
-      description:
-        'Led a six-member team developing a health-monitoring and assistance robot for Smart India Hackathon.',
+      icon: 'bx-trophy',
+      title: 'IoT Lab Competition',
+      period: 'First Prize',
+      description: 'Awarded First Prize in the IoT Lab Competition.',
     },
     {
-      title: 'Team Electronics Lead — TIFAN 2026',
-      period: 'TIFAN 2026',
-      place: 'Agricultural automation',
-      description:
-        'Led electronics integration, embedded programming, and troubleshooting for an agricultural seedling transplanter.',
+      icon: 'bx-medal',
+      title: 'GKDC Go-Kart Design Challenge',
+      period: 'Third Place — Acceleration Event',
+      place: 'Coimbatore',
     },
   ],
 };
@@ -113,22 +115,5 @@ export const extracurricular: ResumeColumn = {
       description:
         "I'm a passionate musician who enjoys playing drums, keyboard and guitar, using my talents to create soulful gospel music.",
     },
-  ],
-};
-
-// The badge (period) carries the result. The first two are new; the rest are
-// carried over from the CV. No dates or award details beyond what is stated.
-export const resumeAchievements: ResumeColumn = {
-  heading: 'Achievements & Competitions',
-  entries: [
-    { title: 'Smart India Hackathon 2026', period: 'Finalist' },
-    { title: 'IoT Lab Competition', period: 'First Prize' },
-    {
-      title: 'Acceleration Event — GKDC Go-Kart Design Challenge',
-      period: '3rd Place',
-      place: 'Coimbatore',
-    },
-    { title: 'TIFAN 2026', period: 'Participant' },
-    { title: 'Young Technocrats 3.0', period: 'Participant' },
   ],
 };
