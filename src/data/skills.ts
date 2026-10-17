@@ -49,8 +49,9 @@ const glyph = (name: string): SkillIcon => ({ kind: 'glyph', name });
 //    automation), KIRA (mobile base, sensing).
 //  - Digital-twin prototype source: PyTorch CNN, XGBoost, Streamlit dashboard,
 //    Unity 3D well visualization — flagged `early` (synthetic data, in progress).
-// Deliberately NOT listed (no evidence yet): URDF, Gazebo, RViz, robot
-// simulation, SolidWorks.
+//  - The user's ROS 2 resume and the Plain-English Robot Arm project: MoveIt 2,
+//    URDF, Gazebo, RViz and simulation work (both ROS 2 systems run in Gazebo).
+// Deliberately NOT listed (no evidence yet): SolidWorks.
 export const skillGroups: SkillGroup[] = [
   {
     id: 'robotics',
@@ -60,8 +61,13 @@ export const skillGroups: SkillGroup[] = [
     tagline: 'Primary focus — building towards a ROS 2 developer role.',
     skills: [
       { label: 'ROS 2', icon: brand(siRos) },
+      { label: 'MoveIt 2', icon: glyph('bx-map-alt') },
+      { label: 'URDF', icon: glyph('bx-vector') },
+      { label: 'Gazebo', icon: glyph('bx-world') },
+      { label: 'RViz', icon: glyph('bx-show') },
       { label: 'Inverse Kinematics', icon: glyph('bx-math') },
       { label: 'Robot Motion Control', icon: glyph('bx-move') },
+      { label: 'Robot Simulation', icon: glyph('bx-play-circle') },
     ],
   },
   {
