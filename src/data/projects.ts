@@ -1,13 +1,19 @@
 // Project case studies. Built projects (GENESIS, KIRA, TIFAN 2026) are sourced
-// from the CV, the user's project folders, and the firmware itself. The two
-// in-progress entries contain only what the user has stated about them — no
+// from the CV, the user's project folders, and the firmware itself. The
+// in-progress entry contains only what the user has stated about them — no
 // results, metrics, dates or field data are claimed.
+// The robotic-arm entry follows the user's own project write-up; the planned
+// inverse kinematics is described as a next step, not as a feature.
+// The plain-English robot arm follows the user's own write-up. It runs in
+// simulation only, and its numbers are simulation results — keep it that way.
+// The Diet Point is a client project: it is described as "a small fitness-food
+// cafe" and carries only the facts and test metrics the user supplied — no
+// owner names, prices, sales figures, location or testimonials.
 
-export type ProjectCategory = 'robotics' | 'hardware' | 'software' | 'ai-ml' | 'automation';
+export type ProjectCategory = 'robotics' | 'software' | 'ai-ml' | 'automation';
 
 export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   robotics: 'Robotics',
-  hardware: 'Hardware',
   software: 'Software',
   'ai-ml': 'AI & ML',
   automation: 'Automation',
@@ -16,6 +22,31 @@ export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
 export interface ProjectVideo {
   file: string;
   poster: string;
+  caption?: string;
+  /** Short clip played (muted) when a card is hovered; defaults to the first video. */
+  preview?: boolean;
+  /** CSS aspect-ratio of the video, e.g. '4 / 5' for a portrait clip. */
+  aspect?: string;
+}
+
+export interface ProjectSection {
+  heading: string;
+  text?: string;
+  bullets?: string[];
+}
+
+export interface ProjectMetric {
+  value: string;
+  label: string;
+}
+
+/**
+ * A screenshot slot. The image lives in src/assets/projects/<slug>/ as
+ * <name>.png | .jpg | .webp; until that file exists a placeholder is shown.
+ */
+export interface GalleryShot {
+  name: string;
+  caption: string;
 }
 
 export interface Project {
@@ -41,6 +72,30 @@ export interface Project {
   /** boxicons class shown on the card when there is no photo yet. */
   placeholderIcon?: string;
   codeUrl?: string;
+  /** Display tags that replace the category labels on the card and in the modal. */
+  tags?: string[];
+  /** Ribbon on the card photo (in-progress projects always show "In progress"). */
+  cardBadge?: string;
+  /** Free-form case-study sections, rendered in order before the problem/approach blocks. */
+  sections?: ProjectSection[];
+  metrics?: ProjectMetric[];
+  metricsNote?: string;
+  /** Heading for the technologies block (default "Technologies"). */
+  techHeading?: string;
+  /** Longer description of the user's role, shown as its own block. */
+  roleDetail?: string;
+  gallery?: GalleryShot[];
+  galleryNote?: string;
+  /** Filters in which this project is highlighted (and listed first). */
+  highlightIn?: ProjectCategory[];
+  /** Small muted clip (file in public/projects/<slug>/) played when the card is hovered. */
+  previewClip?: string;
+  /** List videos before photos in the project viewer. */
+  leadWithVideo?: boolean;
+  /** CSS aspect-ratio for the media viewer (default 4 / 3) — e.g. '3 / 4' for phone screenshots. */
+  mediaAspect?: string;
+  /** object-position for a gallery-based card cover (e.g. 'center 30%'). */
+  coverPosition?: string;
 }
 
 export const projects: Project[] = [
@@ -49,7 +104,7 @@ export const projects: Project[] = [
     name: 'GENESIS',
     subtitle: '12-DOF Quadruped Robot Dog',
     summary: 'Arduino Mega + PCA9685 quadruped with inverse kinematics and a Bluetooth Android app.',
-    categories: ['robotics', 'hardware', 'software'],
+    categories: ['robotics'],
     status: 'Functional prototype',
     inProgress: false,
     role: 'Individual project',
@@ -90,9 +145,15 @@ export const projects: Project[] = [
       'genesis-06-control-app.jpg',
     ],
     videos: [
-      { file: 'genesis-demo-1.mp4', poster: 'genesis-demo-1-poster.jpg' },
-      { file: 'genesis-demo-2.mp4', poster: 'genesis-demo-2-poster.jpg' },
+      {
+        file: 'genesis-build-log.mp4',
+        poster: 'genesis-build-log-poster.jpg',
+        caption: 'Build log — from the first printed leg (23 Oct 2025) to the first steps (29 Nov 2025)',
+        aspect: '4 / 5',
+      },
     ],
+    previewClip: 'genesis-build-log-preview.mp4',
+    leadWithVideo: true,
     codeUrl: 'https://github.com/immanuvel11/genesis-quadruped-robot',
   },
   {
@@ -100,7 +161,7 @@ export const projects: Project[] = [
     name: 'KIRA',
     subtitle: 'Health Monitoring & Assistance Robot',
     summary: 'Wheeled assistance robot with temperature sensing, a touchscreen and two mobile apps. Smart India Hackathon.',
-    categories: ['robotics', 'hardware', 'software'],
+    categories: ['robotics'],
     status: 'Functional prototype — built for Smart India Hackathon (SIH)',
     inProgress: false,
     role: 'Team of 6 — Team Lead',
@@ -147,7 +208,7 @@ export const projects: Project[] = [
     name: 'TIFAN 2026',
     subtitle: 'Automated Seedling Transplanter',
     summary: 'Tractor-towed implement with a stepper gantry, comb gripper and conveyor, field-tested.',
-    categories: ['robotics', 'hardware', 'automation'],
+    categories: ['robotics', 'automation'],
     status: 'Field-tested — Participant, TIFAN 2026',
     inProgress: false,
     role: 'Team Electronics Lead',
@@ -194,6 +255,273 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: 'ros2-english-arm',
+    name: 'Plain-English Robot Arm',
+    subtitle: 'Vision-guided pick & place with ROS 2 — simulation',
+    summary:
+      'Type “Put the red cube in the blue bin” and a ROS 2 arm sees, plans, picks, checks and stays safe on its own — 84% success vs 16% for a traditionally programmed robot, in simulation.',
+    categories: ['robotics'],
+    highlightIn: ['robotics'],
+    status: 'Working in simulation',
+    inProgress: false,
+    cardBadge: 'Simulation',
+    sections: [
+      {
+        heading: 'Overview',
+        text: 'A robot arm you can give instructions to in plain English. In the demo I type “Put the red cube in the blue bin” and the arm does the whole job by itself. This version runs in simulation.',
+      },
+      {
+        heading: 'How it works',
+        bullets: [
+          'Sees — a 3D camera finds every object on the table and measures its position to about 1.5 mm. There is no trained model, so new objects work right away.',
+          'Plans — it works out the steps (pick the cube, place it in the bin) and asks for clarification if an instruction is ambiguous.',
+          'Acts — it picks and places with collision-free motion planning.',
+          'Checks — after each step it looks again with the camera to confirm it worked. If someone moves a part mid-task, it notices and re-plans.',
+          'Stays safe — it slows down when a person comes within 0.9 m, stops within 0.45 m, and the e-stop halts the arm in about 0.3 s.',
+        ],
+      },
+      {
+        heading: 'Built with',
+        text: 'Twelve ROS 2 packages on ROS 2 Humble, using MoveIt 2, ros2_control, Gazebo, Python and OpenCV, with an LLM task planner (Claude API) and an offline planner.',
+      },
+    ],
+    metrics: [
+      { value: '84%', label: 'task success over 76 randomised trials' },
+      { value: '16%', label: 'success for a traditionally programmed robot on the same arm' },
+      { value: '≈ 1.5 mm', label: 'object position accuracy from the 3D camera' },
+      { value: '≈ 0.3 s', label: 'for the e-stop to halt the arm' },
+    ],
+    metricsNote:
+      'Simulation results from randomised trials against a traditionally programmed robot on the same arm. The traditional robot only works when parts are exactly where it was taught; this one handled random positions, changing lighting, clutter and parts moved mid-task. Not measured on a physical robot.',
+    technologies: [
+      'ROS 2 Humble',
+      'MoveIt 2',
+      'ros2_control',
+      'Gazebo',
+      'Python',
+      'OpenCV',
+      'LLM task planner (Claude API)',
+      'Offline planner',
+    ],
+    images: [],
+    videos: [
+      {
+        file: 'ros2-english-arm-demo.mp4',
+        poster: 'ros2-english-arm-poster.jpg',
+        caption: 'Demo in simulation — typing “Put the red cube in the blue bin” (shown at 2× speed)',
+        aspect: '16 / 9',
+      },
+    ],
+    previewClip: 'ros2-english-arm-preview.mp4',
+    leadWithVideo: true,
+    mediaAspect: '16 / 9',
+    cover: { file: 'ros2-english-arm-poster.jpg', position: 'left center' },
+    placeholderIcon: 'bx-bot',
+  },
+  {
+    slug: 'robotic-arm',
+    name: 'Robotic Arm — Reverse Engineering',
+    subtitle: 'Measured, rebuilt in CAD, printed and calibrated',
+    summary:
+      'Instead of assembling a kit, I took a reference arm apart, rebuilt it from scratch in Fusion 360, 3D-printed it and got it moving with an Arduino Mega and a PCA9685.',
+    categories: ['robotics'],
+    status: 'Working prototype — inverse kinematics is the next step',
+    inProgress: false,
+    role: 'Personal project',
+    roleDetail:
+      'Personal project — I did the teardown and measurement, CAD modelling, 3D printing, wiring, assembly and calibration myself.',
+    sections: [
+      {
+        heading: 'Overview',
+        text: 'I didn’t want to just assemble a robotic arm — I wanted to understand it. So I reverse-engineered one: I took a reference arm apart, measured it, rebuilt it from scratch in CAD, printed it and brought it to life with an Arduino Mega.',
+      },
+      {
+        heading: 'How it went',
+        bullets: [
+          'Teardown & measure — took a reference arm apart and measured every link, joint and servo mount.',
+          'Rebuilt in CAD — modelled each part from scratch in Fusion 360 and set up the revolute joints to check the motion before printing anything.',
+          'Print & wire — 3D-printed the parts and wired the servos to an Arduino Mega through a PCA9685 servo driver.',
+          'Assemble & calibrate — set home angles for each joint and tuned the PWM ranges until the movement was smooth.',
+          'First motion — it works!',
+        ],
+      },
+      {
+        heading: 'Key takeaway',
+        text: 'Measuring a part properly teaches you more than copying it. Every hole and clearance in the original was there for a reason, and I only saw why when I had to rebuild it myself.',
+      },
+      {
+        heading: 'Next step',
+        text: 'Adding inverse kinematics so the arm can reach a target point instead of moving joint by joint. This is planned — it is not implemented yet.',
+      },
+    ],
+    technologies: [
+      'Fusion 360',
+      '3D printing',
+      'Arduino Mega',
+      'PCA9685 servo driver',
+      'Servo motors',
+      'PWM calibration',
+    ],
+    result:
+      'Working arm: the joints move smoothly after home-angle and PWM-range calibration. Inverse kinematics is the next step.',
+    images: [],
+    videos: [
+      {
+        file: 'robotic-arm-reverse-engineering.mp4',
+        poster: 'robotic-arm-poster.jpg',
+        caption: 'Project walkthrough — from teardown to first motion',
+        aspect: '16 / 9',
+      },
+    ],
+    previewClip: 'robotic-arm-preview.mp4',
+    leadWithVideo: true,
+    mediaAspect: '16 / 9',
+    cover: { file: 'robotic-arm-poster.jpg', position: 'center 40%' },
+    placeholderIcon: 'bx-bot',
+  },
+  {
+    slug: 'diet-point',
+    name: 'The Diet Point',
+    subtitle: 'Offline Billing & Owner Dashboard',
+    summary:
+      'Client project: an offline billing and business dashboard for a small fitness-food café — fast billing, sales and profit analytics, menu management and automatic backups, with no cloud or subscription.',
+    categories: ['software', 'automation'],
+    tags: ['Software', 'Business Automation', 'Client Project'],
+    status: 'Completed',
+    inProgress: false,
+    cardBadge: 'Completed',
+    role: 'Sole developer',
+    roleDetail:
+      'Sole developer — responsible for requirements, design, development, testing, packaging, delivery and owner documentation.',
+    sections: [
+      {
+        heading: 'Overview',
+        text: 'An offline billing and business-management application designed for a small fitness-food café. The billing counter and the owners’ dashboard live in a single Windows application that runs entirely on the shop’s own computer — no cloud services and no monthly subscription.',
+      },
+      {
+        heading: 'The challenge',
+        text: 'A small café counter needs fast billing, accurate profit calculations, clear visibility into sales, a simple installation, complete offline operation and reliable protection of its data.',
+      },
+      {
+        heading: 'The solution',
+        text: 'A Python, FastAPI, SQLite and JavaScript application that combines billing, reporting, menu management, expense tracking and data recovery in one tool.',
+      },
+      {
+        heading: 'Key features',
+        bullets: [
+          'Fast billing with searchable product tiles.',
+          'Dine-in and takeaway orders.',
+          'UPI, cash and card payment methods.',
+          'Discounts and combo savings.',
+          'Sales and profit dashboard.',
+          'Best sellers and slow-moving products.',
+          'Owner login, shift tracking and audit logs.',
+          'Menu management and Excel/CSV import.',
+          'Daily closing summaries and report exports.',
+          'Automatic backups and recovery.',
+          'Separate practice mode for training.',
+          'Simple Windows installation.',
+        ],
+      },
+      {
+        heading: 'Under the hood',
+        bullets: [
+          'Local architecture: a FastAPI backend and a SQLite database run on the café’s own Windows computer and serve the JavaScript interface — nothing depends on the cloud.',
+          'Transactional bill saving: a bill is stored completely or not at all.',
+          'Money is stored as integer paise rather than floating-point rupees, so totals and profit stay exact.',
+          'Versioned database migrations let the data structure change safely between releases.',
+          'Startup integrity checks run when the app opens.',
+          'Offline-first by design: the app, its data and the interface (a PWA with a service worker) are all local.',
+        ],
+      },
+    ],
+    metrics: [
+      { value: '150,000+', label: 'bills in testing' },
+      { value: '< 50 ms', label: 'load time for every tested screen (300 ms target)' },
+      { value: '≈ 1 s', label: 'to create a three-item bill' },
+      { value: '76', label: 'automated tests covering critical workflows and data integrity' },
+    ],
+    metricsNote:
+      'Measured test results from my own testing — not a guarantee of performance in every environment.',
+    techHeading: 'Tech stack',
+    technologies: [
+      'Python',
+      'FastAPI',
+      'SQLite',
+      'JavaScript (ES modules)',
+      'HTML',
+      'CSS',
+      'PWA',
+      'Service Workers',
+      'SVG',
+      'openpyxl',
+      'pytest',
+      'PowerShell',
+      'Windows packaging',
+    ],
+    images: [],
+    placeholderIcon: 'bx-receipt',
+    gallery: [
+      { name: 'billing-counter', caption: 'Billing counter — dine-in or takeaway, discount, UPI / cash / card' },
+      { name: 'owner-dashboard', caption: 'Owner dashboard — sales, bills, average bill, costs and profit' },
+      { name: 'expenses', caption: 'Expenses — rent, gas, salary and other costs counted in profit' },
+      { name: 'login-screen', caption: 'Owner login — tap a name, then enter a PIN' },
+      // Not captured yet: shown only while developing locally, hidden on the live site.
+      { name: 'best-sellers-slow-movers', caption: 'Best sellers and slow movers' },
+      { name: 'end-of-day-summary', caption: 'End-of-day summary' },
+    ],
+    galleryNote: 'Screenshots contain no real business data; owner names are blurred.',
+  },
+  {
+    slug: 'toneshift',
+    name: 'ToneShift',
+    subtitle: 'Chord Transposer & Tuner',
+    summary:
+      'Self-initiated app that shifts chord progressions by semitones and tunes a guitar from the microphone — built in my first year to solve a problem I had as a musician.',
+    categories: ['software'],
+    tags: ['Software', 'Music Technology'],
+    status: 'Working app — first-year personal project',
+    inProgress: false,
+    role: 'Self-initiated project',
+    roleDetail:
+      'Created in my first year as a self-initiated project. Rather than keep transposing chords by hand, I decided to build my own application — combining my interest in music with software development and practical problem-solving.',
+    sections: [
+      {
+        heading: 'Overview',
+        text: 'ToneShift is a music utility app that combines a chord transposer with a guitar tuner. I made it in my first year of engineering, inspired by a real problem I ran into as a musician.',
+      },
+      {
+        heading: 'The problem',
+        text: 'As a musician, I often needed to move chords into a different key. Working that out by hand every time was inconvenient, so I looked for a simpler way instead of relying on manual calculation.',
+      },
+      {
+        heading: 'The solution',
+        text: 'I built my own app. Enter a chord progression, shift it up or down one semitone at a time, and read the transposed chords along with a running step count. A tuner in the same app lets a guitarist pick a string and tune it using the device’s microphone.',
+      },
+      {
+        heading: 'Key features',
+        bullets: [
+          'Chord transposition: enter a progression and move every chord up or down in semitone steps.',
+          'Step counter showing how far the progression has been transposed.',
+          'Guitar tuner for the six standard-tuning strings (E, A, D, G, B, E).',
+          'Live pitch detection from the microphone, with the detected frequency in Hz and a clear tune up / tune down / in-tune result.',
+          'Simple two-button interface — Transpose and Tuner — designed for quick use by musicians.',
+        ],
+      },
+    ],
+    techHeading: 'Technology stack',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'Web Audio API'],
+    images: [],
+    placeholderIcon: 'bx-music',
+    gallery: [
+      { name: 'transposer', caption: 'Chord transposer — enter a progression and shift it by semitones' },
+      { name: 'tuner', caption: 'Guitar tuner — choose a string and tune using the microphone' },
+    ],
+    galleryNote: 'Screenshots from the app running on an Android phone.',
+    mediaAspect: '3 / 4',
+    coverPosition: 'center 28%',
+  },
+  {
     slug: 'digital-twin',
     name: 'Well-to-Surface Digital Twin',
     subtitle: 'Hybrid physics + AI model for CSS and Sucker Rod Pump (SRP) operations',
@@ -230,21 +558,26 @@ export const projects: Project[] = [
       'Work in progress. All values in the prototype are simulated / demonstration data — nothing here represents real field measurements.',
     images: [],
     placeholderIcon: 'bx-network-chart',
-  },
-  {
-    slug: 'ar-visualization',
-    name: 'AR Visualization',
-    subtitle: 'Augmented-reality medical / technical visualization',
-    summary: 'Early-stage: Unity + Vuforia AR with computer-vision, segmentation and CNN-based models.',
-    categories: ['ai-ml', 'software'],
-    status: 'Early-stage / exploratory',
-    inProgress: true,
-    approach: [
-      'Built on Unity and Vuforia for augmented-reality visualization of medical / technical content.',
-      'Explores computer-vision and segmentation concepts and CNN-based models.',
+    gallery: [
+      { name: 'overview', caption: 'Dashboard overview — field summary; data mode: synthetic / physics-simulated' },
+      { name: 'unity-3d-twin', caption: 'Interactive 3D pumpjack digital twin (Unity) with live telemetry panels' },
+      { name: 'thermal-response', caption: 'Reservoir and wellbore thermal response' },
+      { name: 'production-response', caption: 'Predicted production response' },
+      { name: 'what-if', caption: 'What-if analysis — adjust operating conditions and compare' },
     ],
-    technologies: ['Unity', 'Vuforia', 'Computer Vision', 'Segmentation', 'CNN'],
-    images: [],
-    placeholderIcon: 'bx-cube-alt',
+    galleryNote: 'Screenshots of the working prototype dashboard, running on synthetic data — not field measurements.',
+    videos: [
+      {
+        file: 'flowforge-walkthrough.mp4',
+        poster: 'flowforge-walkthrough-poster.jpg',
+        caption: 'FlowForge project walkthrough (narrated) — prototype on synthetic data',
+      },
+      {
+        file: 'physical-model-demo.mp4',
+        poster: 'physical-model-demo-poster.jpg',
+        caption: 'Physical pumpjack model running beside the Unity digital twin',
+        preview: true,
+      },
+    ],
   },
 ];

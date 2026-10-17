@@ -39,7 +39,7 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
     };
   }, [onClose]);
 
-  const categories = project.categories.map((category) => CATEGORY_LABELS[category]);
+  const categories = project.tags ?? project.categories.map((category) => CATEGORY_LABELS[category]);
 
   return (
     <div
@@ -77,6 +77,20 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
               ))}
             </div>
 
+            {project.sections?.map((section) => (
+              <div key={section.heading}>
+                <h5>{section.heading}</h5>
+                {section.text ? <p>{section.text}</p> : null}
+                {section.bullets ? (
+                  <ul className="pm-list">
+                    {section.bullets.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            ))}
+
             {project.problem ? (
               <>
                 <h5>The problem</h5>
@@ -111,7 +125,22 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
               </>
             ) : null}
 
-            <h5>Technologies</h5>
+            {project.metrics ? (
+              <>
+                <h5>Results</h5>
+                <dl className="pm-metrics">
+                  {project.metrics.map((metric) => (
+                    <div key={metric.label} className="pm-metric">
+                      <dt>{metric.value}</dt>
+                      <dd>{metric.label}</dd>
+                    </div>
+                  ))}
+                </dl>
+                {project.metricsNote ? <p className="pm-metrics-note">{project.metricsNote}</p> : null}
+              </>
+            ) : null}
+
+            <h5>{project.techHeading ?? 'Technologies'}</h5>
             <div className="pm-tech">
               {project.technologies.map((tech) => (
                 <span key={tech}>{tech}</span>
@@ -122,6 +151,13 @@ export function ProjectModal({ project, onClose }: { project: Project; onClose: 
               <>
                 <h5>{project.inProgress ? 'Status' : 'Result'}</h5>
                 <div className="pm-result">{project.result}</div>
+              </>
+            ) : null}
+
+            {project.roleDetail ? (
+              <>
+                <h5>My role</h5>
+                <p>{project.roleDetail}</p>
               </>
             ) : null}
 

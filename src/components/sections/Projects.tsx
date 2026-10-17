@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
-import { CATEGORY_LABELS, projects, type ProjectCategory } from '@/data/projects';
+import { CATEGORY_LABELS, projects, type Project, type ProjectCategory } from '@/data/projects';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { ProjectCard } from '@/components/projects/ProjectCard';
 import { ProjectModal } from '@/components/projects/ProjectModal';
 
 type Filter = 'all' | ProjectCategory;
 
-const CATEGORY_ORDER: ProjectCategory[] = ['robotics', 'hardware', 'software', 'ai-ml', 'automation'];
+const CATEGORY_ORDER: ProjectCategory[] = ['robotics', 'software', 'ai-ml', 'automation'];
 
 export function Projects() {
   const [filter, setFilter] = useState<Filter>('all');
@@ -24,7 +24,12 @@ export function Projects() {
     ];
   }, []);
 
-  const visible = projects.filter((project) => filter === 'all' || project.categories.includes(filter));
+  const isHighlighted = (project: Project) =>
+    filter !== 'all' && (project.highlightIn?.includes(filter) ?? false);
+  // Highlighted projects for the active filter come first.
+  const visible = projects
+    .filter((project) => filter === 'all' || project.categories.includes(filter))
+    .sort((a, b) => Number(isHighlighted(b)) - Number(isHighlighted(a)));
   const openProject = projects.find((project) => project.slug === openSlug) ?? null;
   const closeModal = useCallback(() => setOpenSlug(null), []);
 
@@ -50,9 +55,14 @@ export function Projects() {
           </div>
         </div>
 
-        <div className="row portfolio-container">
+        <div className="pcard-grid">
           {visible.map((project) => (
-            <ProjectCard key={project.slug} project={project} onOpen={() => setOpenSlug(project.slug)} />
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              highlighted={isHighlighted(project)}
+              onOpen={() => setOpenSlug(project.slug)}
+            />
           ))}
         </div>
       </div>
