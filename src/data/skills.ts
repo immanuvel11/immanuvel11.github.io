@@ -1,109 +1,131 @@
 import {
-  siAndroid,
   siArduino,
-  siBlender,
   siBluetooth,
   siCplusplus,
   siCss,
   siEspressif,
   siGit,
-  siGithub,
   siHtml5,
   siJavascript,
   siOpencv,
   siPython,
   siPytorch,
   siRos,
-  siTinkercad,
+  siStreamlit,
+  siUnity,
   type SimpleIcon,
 } from 'simple-icons';
 
 export type SkillIcon =
-  | { kind: 'brand'; icon: SimpleIcon }
+  | { kind: 'brand'; icon: SimpleIcon; color?: string }
   | { kind: 'glyph'; name: string }
   | { kind: 'image'; src: string };
 
 export interface Skill {
   label: string;
   icon: SkillIcon;
+  /** Only used so far inside the in-progress digital-twin prototype. */
+  early?: boolean;
 }
 
 export interface SkillGroup {
   id: string;
   title: string;
-  note?: string;
+  /** Boxicons glyph for the category heading. */
+  icon: string;
+  /** Rendered larger and first — the primary career focus. */
+  featured?: boolean;
+  tagline?: string;
   skills: Skill[];
 }
 
-const brand = (icon: SimpleIcon): SkillIcon => ({ kind: 'brand', icon });
+const brand = (icon: SimpleIcon, color?: string): SkillIcon => ({ kind: 'brand', icon, color });
 const glyph = (name: string): SkillIcon => ({ kind: 'glyph', name });
 
-// Group contents come from the CV's Technical Skills section; the AI & ML
-// group is the user's own account of what the digital-twin prototype uses.
+// Each entry is backed by the CV, a project on this site, or project source:
+//  - CV: ROS2, OpenCV, motion/servo control, Arduino Mega, ESP32, Bluetooth,
+//    sensor/electronics/system integration, Fusion 360, 3D printing, Git(Hub).
+//  - GENESIS (inverse kinematics, servo drivers), TIFAN (stepper drivers,
+//    automation), KIRA (mobile base, sensing).
+//  - Digital-twin prototype source: PyTorch CNN, XGBoost, Streamlit dashboard,
+//    Unity 3D well visualization — flagged `early` (synthetic data, in progress).
+// Deliberately NOT listed (no evidence yet): URDF, Gazebo, RViz, robot
+// simulation, SolidWorks.
 export const skillGroups: SkillGroup[] = [
   {
-    id: 'programming',
-    title: 'Programming',
+    id: 'robotics',
+    title: 'Robotics & ROS 2',
+    icon: 'bx-bot',
+    featured: true,
+    tagline: 'Primary focus — building towards a ROS 2 developer role.',
     skills: [
-      { label: 'Python', icon: brand(siPython) },
-      { label: 'C++', icon: brand(siCplusplus) },
-      { label: 'JavaScript', icon: brand(siJavascript) },
-      { label: 'HTML', icon: brand(siHtml5) },
-      { label: 'CSS', icon: brand(siCss) },
+      { label: 'ROS 2', icon: brand(siRos) },
+      { label: 'Inverse Kinematics', icon: glyph('bx-math') },
+      { label: 'Robot Motion Control', icon: glyph('bx-move') },
     ],
   },
   {
     id: 'embedded',
-    title: 'Embedded & Hardware',
+    title: 'Embedded Systems & Electronics',
+    icon: 'bx-chip',
     skills: [
       { label: 'Arduino Mega', icon: brand(siArduino) },
       { label: 'ESP32', icon: brand(siEspressif) },
-      { label: 'Servo & Motion Control', icon: glyph('bx-slider-alt') },
+      { label: 'Servo & Motor Control', icon: glyph('bx-slider-alt') },
       { label: 'Sensor Integration', icon: glyph('bx-radar') },
-      { label: 'Bluetooth', icon: brand(siBluetooth) },
+      { label: 'Motor Drivers', icon: glyph('bx-bolt-circle') },
+      { label: 'Bluetooth Communication', icon: brand(siBluetooth) },
       { label: 'Electronics Integration', icon: glyph('bx-chip') },
     ],
   },
   {
-    id: 'robotics',
-    title: 'Robotics',
+    id: 'programming',
+    title: 'Programming & Software',
+    icon: 'bx-code-alt',
     skills: [
-      { label: 'ROS2', icon: brand(siRos) },
-      { label: 'OpenCV', icon: brand(siOpencv) },
-      { label: 'Inverse Kinematics', icon: glyph('bx-math') },
-      { label: 'System Integration', icon: glyph('bx-cog') },
+      { label: 'Python', icon: brand(siPython) },
+      { label: 'C++', icon: brand(siCplusplus) },
+      { label: 'JavaScript', icon: brand(siJavascript) },
+      { label: 'HTML5', icon: brand(siHtml5) },
+      { label: 'CSS3', icon: brand(siCss) },
+      { label: 'Git & GitHub', icon: brand(siGit) },
     ],
   },
   {
     id: 'ai-ml',
-    title: 'AI & ML',
-    note: 'Used in my digital-twin prototype (in progress).',
+    title: 'AI, ML & Computer Vision',
+    icon: 'bx-brain',
     skills: [
+      { label: 'OpenCV', icon: brand(siOpencv) },
+      { label: 'Computer Vision', icon: glyph('bx-scan') },
       { label: 'Machine Learning', icon: glyph('bx-brain') },
-      { label: 'PyTorch', icon: brand(siPytorch) },
-      { label: 'XGBoost', icon: glyph('bx-analyse') },
-      { label: 'Synthetic Data', icon: glyph('bx-network-chart') },
+      { label: 'PyTorch', icon: brand(siPytorch), early: true },
+      { label: 'CNNs', icon: glyph('bx-sitemap'), early: true },
+      { label: 'XGBoost', icon: glyph('bx-analyse'), early: true },
     ],
   },
   {
     id: 'cad',
-    title: 'CAD & Fabrication',
+    title: 'CAD, Design & Visualization',
+    icon: 'bx-cube-alt',
     skills: [
       { label: 'Fusion 360', icon: { kind: 'image', src: '/icons/fusion360.jpg' } },
-      { label: 'CadQuery', icon: glyph('bx-cube-alt') },
-      { label: 'Blender', icon: brand(siBlender) },
-      { label: 'Tinkercad', icon: brand(siTinkercad) },
+      { label: 'CAD Modeling', icon: glyph('bx-cube-alt') },
       { label: '3D Printing', icon: glyph('bx-printer') },
-      { label: 'Rapid Prototyping', icon: glyph('bx-wrench') },
+      { label: 'Unity', icon: brand(siUnity, '#272829'), early: true },
+      { label: 'Digital Twin Visualization', icon: glyph('bx-network-chart'), early: true },
     ],
   },
   {
-    id: 'tools',
-    title: 'Tools',
+    id: 'automation',
+    title: 'Automation & Integration',
+    icon: 'bx-cog',
     skills: [
-      { label: 'Git', icon: brand(siGit) },
-      { label: 'GitHub', icon: brand(siGithub) },
-      { label: 'MIT App Inventor', icon: brand(siAndroid) },
+      { label: 'Hardware–Software Integration', icon: glyph('bx-link') },
+      { label: 'Sensor Feedback Systems', icon: glyph('bx-pulse') },
+      { label: 'Robotics Automation', icon: glyph('bx-bot') },
+      { label: 'Mobile Robot Control', icon: glyph('bx-car') },
+      { label: 'Streamlit Dashboards', icon: brand(siStreamlit), early: true },
     ],
   },
 ];

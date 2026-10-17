@@ -1,4 +1,10 @@
-import { education, experience, extracurricular, leadership, type ResumeColumn } from '@/data/resume';
+import {
+  education,
+  experience,
+  extracurricular,
+  recognition,
+  type ResumeColumn,
+} from '@/data/resume';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 
 function ResumeGroup({ column }: { column: ResumeColumn }) {
@@ -7,7 +13,10 @@ function ResumeGroup({ column }: { column: ResumeColumn }) {
       <h3 className="resume-title">{column.heading}</h3>
       {column.entries.map((entry) => (
         <div className="resume-item" key={`${entry.title}-${entry.period}`}>
-          <h4>{entry.title}</h4>
+          <h4>
+            {entry.icon ? <i className={`bx ${entry.icon} resume-item-icon`} aria-hidden="true" /> : null}
+            {entry.title}
+          </h4>
           <h5>{entry.period}</h5>
           {entry.place ? <p className="font-italic">{entry.place}</p> : null}
           {entry.description ? <p>{entry.description}</p> : null}
@@ -33,7 +42,7 @@ export function Resume() {
         <div className="row">
           <div className="col-lg-6">
             <ResumeGroup column={experience} />
-            <ResumeGroup column={leadership} />
+            <ResumeGroup column={recognition} />
           </div>
           <div className="col-lg-6">
             <ResumeGroup column={education} />
